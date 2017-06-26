@@ -14,7 +14,7 @@ return [
     */
 
     'defaults' => [
-        'guard' => 'web',
+        'guard' => 'wow',
         'passwords' => 'users',
     ],
 
@@ -36,6 +36,12 @@ return [
     */
 
     'guards' => [
+
+        'wow' => [
+             'driver' => 'session',
+             'provider' => 'accounts',
+        ],
+
         'web' => [
             'driver' => 'session',
             'provider' => 'users',
@@ -69,6 +75,11 @@ return [
             'driver' => 'eloquent',
             'model' => App\User::class,
         ],
+
+        'accounts' => [
+            'driver' => 'sha',
+            'model' => App\Account::class,
+        ]
 
         // 'users' => [
         //     'driver' => 'database',

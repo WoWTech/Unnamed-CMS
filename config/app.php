@@ -177,6 +177,9 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        App\Auth\ServiceProviders\WoWAuthServiceProvider::class,
+        App\Auth\ServiceProviders\HasherServiceProvider::class,
+
     ],
 
     /*
