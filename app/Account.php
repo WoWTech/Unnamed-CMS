@@ -42,11 +42,13 @@ class Account extends Authenticatable
         });
     }
 
+    // Accounts table doesn't have remember_token column
+    // according to the trinity documentation.
+
     public function getRememberTokenName()
     {
       return null;
     }
-
 
     protected function setPasswordAttribute($value)
     {
