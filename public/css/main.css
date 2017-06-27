@@ -221,7 +221,7 @@ aside {
   background-color: #1E3552;
   border-radius: 3px 0px 0px 3px;
 }
-.block-content > input[type="text"], .block-content > input[type="password"] {
+.block-content > form > input[type="text"], .block-content > form > input[type="password"] {
   width: 100%;
   height: 30px;
   border: 1px solid rgba(110, 110, 110, 0.35);
@@ -231,27 +231,30 @@ aside {
   font-size: 14px;
   font-family: "Semi";
 }
-.block-content > input[type="text"]::-webkit-input-placeholder, .block-content > input[type="password"]::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+.block-content > form > input[type="text"].has-error, .block-content > form > input[type="password"].has-error {
+  border-color: red;
+}
+.block-content > form > input[type="text"]::-webkit-input-placeholder, .block-content > form > input[type="password"]::-webkit-input-placeholder { /* Chrome/Opera/Safari */
   text-align: center;
   font-family: "Semi";
   font-size: 13px;
 }
-.block-content > input[type="text"]::-moz-placeholder, .block-content > input[type="password"]::-moz-placeholder{ /* Firefox 19+ */
+.block-content > form > input[type="text"]::-moz-placeholder, .block-content > form > input[type="password"]::-moz-placeholder{ /* Firefox 19+ */
   text-align: center;
   font-family: "Semi";
   font-size: 13px;
 }
-.block-content > input[type="text"]:-ms-input-placeholder, .block-content > input[type="password"]:-ms-input-placeholder{ /* IE 10+ */
+.block-content > form > input[type="text"]:-ms-input-placeholder, .block-content > form > input[type="password"]:-ms-input-placeholder{ /* IE 10+ */
   text-align: center;
   font-family: "Semi";
   font-size: 13px;
 }
-.block-content > input[type="text"]:-moz-placeholder, .block-content > input[type="password"]:-moz-placeholder{ /* Firefox 18- */
+.block-content > form > input[type="text"]:-moz-placeholder, .block-content > form > input[type="password"]:-moz-placeholder{ /* Firefox 18- */
   text-align: center;
   font-family: "Semi";
   font-size: 13px;
 }
-.block-content > input[type="submit"], .input-group > input[type="submit"] {
+.block-content > form > input[type="submit"], .input-group > input[type="submit"] {
   float: right;
   min-width: 115px;
   height: 30px;
@@ -278,7 +281,7 @@ aside {
   background-size: contain;
   background-repeat: no-repeat;
 }
-.user-info > button {
+.user-info > .logout {
   color: white;
   font-family: "SL";
   font-size: 12px;
@@ -286,7 +289,7 @@ aside {
   border: none;
   border-radius: 3px;
   background-color: #E69914;
-
+  text-decoration: none;
 }
 .user-details {
   margin-left: -10px;

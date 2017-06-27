@@ -1,17 +1,4 @@
 <aside class="sidebar">
-    <div class="block">
-
-        <div class="block-header">
-            Login
-        </div>
-
-        <div class="block-content">
-            <input type="text" placeholder="Account">
-            <input type="password" placeholder="Password">
-            <input type="submit" value="Submit" class="blue">
-        </div>
-
-    </div>
     @if (Auth::check())
       <div class="block with-border">
           <div class="block-content">
@@ -26,7 +13,8 @@
                           <span class="bonuses">1223 bonuses</span>
                       </div>
 
-                      <button class="logout">Logout</button>
+
+                      <a href="{{ route('logout') }}" class="logout" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
                   </div>
 
               </div>
@@ -37,6 +25,25 @@
               </div>
 
           </div>
+      </div>
+
+      <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">{{ csrf_field() }}</form>
+    @else
+      <div class="block">
+
+          <div class="block-header">
+              Login
+          </div>
+          <div class="block-content">
+            <form action="{{ route('login') }}" method="post">
+              {{ csrf_field() }}
+              <input type="text" name="username" placeholder="Account" class="{{ $errors->has('username') ? 'has-error' : '' }}" value="{{ old('username') }}">
+              <input type="password" name="password" placeholder="Password" class="{{ $errors->has('password') ? 'has-error' : '' }}">
+              <input type="submit" value="Submit" class="blue">
+
+            </form>
+          </div>
+
       </div>
     @endif
 </aside>
