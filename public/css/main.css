@@ -499,3 +499,9 @@ tr.separator {
 .yellow {
   color: #CFBC41;
 }
+.input-errors {
+  padding: 10px 10px 10px 30px;
+  background-color: #ff8c8c;
+  color: white;
+  border: 1px solid rgb(239, 34, 34);
+}

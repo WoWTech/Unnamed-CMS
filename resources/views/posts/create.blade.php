@@ -8,6 +8,9 @@
     </header>
 
     <form action="{{ route('posts.store') }}" method="post">
+
+      @include('layouts.input_errors')
+      
       {{ csrf_field() }}
       <div class="input-group">
         <label for="username">Title</label>

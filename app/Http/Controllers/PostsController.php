@@ -20,6 +20,11 @@ class PostsController extends Controller
 
     public function store()
     {
+        $this->validate(request(), [
+          'title' => 'required|min:2,max:50',
+          'content'  => 'required|min:3,max:3000'
+        ]);
+
         Post::create([
             'title'      => request('title'),
             'content'    => request('content'),
