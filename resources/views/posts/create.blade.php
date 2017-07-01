@@ -11,12 +11,12 @@
       {{ csrf_field() }}
       <div class="input-group">
         <label for="username">Title</label>
-        <input name="title" type="text" name="title" placeholder="">
+        <input name="title" type="text" name="title" placeholder="" required>
       </div>
 
       <div class="input-group">
         <label for="username">Content</label>
-        <textarea title="content" name="content"></textarea>
+        <textarea title="content" name="content" required></textarea>
       </div>
 
       <div class="input-group">
