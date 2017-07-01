@@ -15,3 +15,4 @@ Auth::routes();
 
 Route::get('/', 'PostsController@index')->name('home');
 Route::resource('posts', 'PostsController');
+Route::post('posts/{post}/comments', 'CommentsController@store');

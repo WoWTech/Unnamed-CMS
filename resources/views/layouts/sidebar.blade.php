@@ -9,8 +9,8 @@
                       </div>
 
                       <div class="user-details">
-                          <p>AlexBUddy01</p>
-                          <span class="bonuses">1223 bonuses</span>
+                          <p>{{ Auth::user()->username }}</p>
+                          <span class="bonuses">1000 bonuses</span>
                       </div>
 
 

@@ -33,6 +33,11 @@ class Account extends Authenticatable
         'sha_pass_hash',
     ];
 
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
     public static function boot()
     {
         parent::boot();

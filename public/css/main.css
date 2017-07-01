@@ -351,12 +351,15 @@ aside {
   max-width: 64px;
   max-height: 64px
 }
-.comment-content, .input-comment-area {
+.comment-content, .input-comment-area, .input-comment-area > form  {
   display: flex;
   flex-direction: column;
   margin-left: 10px;
   font-size: 14px;
   font-family: "Semi";
+}
+.comment-content {
+  width: 100%;
 }
 .comment-content > .comment-header {
   border-bottom: 1px solid rgba(149, 152, 154, 0.3);
@@ -377,7 +380,10 @@ aside {
   font-size: 15px;
   width: 100%;
 }
-.input-comment-area > textarea {
+.input-comment-area > form {
+  margin: 0;
+}
+.input-comment-area > form > textarea {
   border: 1px solid #d2d2d2;
   margin-top: 5px;
   padding: 10px;
@@ -385,7 +391,7 @@ aside {
   line-height: 1.4;
   font-size: 14px;
 }
-.input-comment-area > .action > input[type="submit"] {
+.input-comment-area > form > .action > input[type="submit"] {
   float: right;
   height: 30px;
   text-align: center;
