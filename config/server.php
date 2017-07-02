@@ -14,7 +14,7 @@ return [
     'realms' => array(
       [
           'name' => 'Warsong Gluth',
-          'ip'   => 'localhost',
+          'ip'   => '127.0.0.1', // Convention
           'port' => 3306
       ]
     )

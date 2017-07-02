@@ -18,7 +18,7 @@ class ServerStatus
 
         return $status;
     }
-    
+
     // For now it's hardcoded, because the only template we got
     // at the moment supports only 1 realm.
 
@@ -27,7 +27,7 @@ class ServerStatus
 
         $realms = config('server.realms');
 
-        $result = @fsockopen($realms[0]['ip'], $realms[0]['port'], $errNum, $errMsg, 1);
+        $result = @fsockopen($realms[0]['ip'], $realms[0]['port'], $errNum, $errMsg, 1) === false ?: true;
 
         return (object)array('status' => $result, 'name' => $realms[0]['name'], 'port' => $realms[0]['port'], 'ip' => $realms[0]['ip']);
     }
