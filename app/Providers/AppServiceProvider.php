@@ -16,7 +16,7 @@ class AppServiceProvider extends ServiceProvider
     {
         view()->composer('layouts.page-header', function($view)
         {
-            $realm = ServerStatus::getServerStatus();
+            $realm = ServerStatus::status();
             $view->with('realm', $realm);
         });
     }

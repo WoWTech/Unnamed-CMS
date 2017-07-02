@@ -2,18 +2,30 @@
 
 namespace App\Services;
 
+use Illuminate\Support\Facades\Cache;
+
 class ServerStatus
 {
 
+    // Caching server status for 10 seconds
+    // TODO: Replace static value with dynamic from config
+
+    public static function status()
+    {
+        $status = Cache::remember('realm_status', 0.1 , function () {
+            return static::getServerStatus();
+        });
+
+        return $status;
+    }
+    
     // For now it's hardcoded, because the only template we got
     // at the moment supports only 1 realm.
 
-    public static function getServerStatus(array $realms = null)
+    public static function getServerStatus()
     {
-        if ($realms === null)
-        {
-            $realms = config('server.realms');
-        }
+
+        $realms = config('server.realms');
 
         $result = @fsockopen($realms[0]['ip'], $realms[0]['port'], $errNum, $errMsg, 1);
 
