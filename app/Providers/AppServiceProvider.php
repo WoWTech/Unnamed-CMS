@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use App\Services\ServerStatus;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -13,7 +14,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        view()->composer('layouts.page-header', function($view)
+        {
+            $realm = ServerStatus::getServerStatus();
+            $view->with('realm', $realm);
+        });
     }
 
     /**

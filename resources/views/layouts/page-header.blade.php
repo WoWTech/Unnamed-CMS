@@ -19,9 +19,9 @@
             <div class="server-info">
                 <div class="realm-logo"></div>
                 <div class="realm-name">
-                    Warsong gluth
+                    {{ $realm->name }}
                 </div>
-                <span class="server-status-badge online ">Online</span>
+                <span class="server-status-badge {{ $realm->status ? 'online' : 'offline' }} ">{{ $realm->status ? 'Online' : 'Offline' }}</span>
             </div>
 
             <div class="server-details">
