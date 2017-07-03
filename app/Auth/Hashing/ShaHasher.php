@@ -10,7 +10,7 @@ class ShaHasher implements HasherContract
 
     public function make($data, array $options = [])
     {
-        $hash = SHA1($data[0].':'.$data[1]);
+        $hash = strtoupper(SHA1(strtoupper($data[0]).':'.strtoupper($data[1])));
 
         if ($hash === false) {
           throw new RuntimeException('SHA Hasher is not available');
