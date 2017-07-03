@@ -57,7 +57,7 @@ class Account extends Authenticatable
 
     protected function setPasswordAttribute($value)
     {
-        $this->attributes['sha_pass_hash'] = sha1($this->attributes['username'].':'.$value);
+        $this->attributes['sha_pass_hash'] = strtoupper(sha1(strtoupper($this->attributes['username']).':'.strtoupper($value)));
     }
 
 }
