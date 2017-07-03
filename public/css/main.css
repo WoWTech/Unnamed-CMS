@@ -144,6 +144,10 @@ body {
   padding-top: 20px;
   display: flex;
 }
+.main-section-content > section > p {
+  text-align: center;
+  padding: 5px 0px;
+}
 .page-content {
   width: 700px;
   display: flex;

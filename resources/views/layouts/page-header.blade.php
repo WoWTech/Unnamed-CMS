@@ -26,7 +26,7 @@
 
             <div class="server-details">
                 <span class="badge rounded">
-        <span class="light-blue">800</span> <span style="color:#95989A">/</span> <span class="red">956</span>
+        <span class="light-blue">{{ $online->alliance }}</span> <span style="color:#95989A">/</span> <span class="red">{{ $online->horde }}</span>
                 </span>
                 <span class="badge rounded green">
         25 hours 15 minutes uptime
@@ -46,8 +46,8 @@
             </div>
 
             <div class="server-buttons">
-                <a href="#">Registration</a>
-                <a href="#">Statistic</a>
+                <a href="{{ route('register') }}">Registration</a>
+                <a href="{{ route('online') }}">Statistic</a>
             </div>
         </div>
     </div>

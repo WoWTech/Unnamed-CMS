@@ -3,7 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use App\Services\ServerStatus;
+use App\Services\Server;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -16,8 +16,9 @@ class AppServiceProvider extends ServiceProvider
     {
         view()->composer('layouts.page-header', function($view)
         {
-            $realm = ServerStatus::status();
-            $view->with('realm', $realm);
+            $realm = Server::status();
+            $online = Server::playersOnline();
+            $view->with('realm', $realm)->with('online', $online);
         });
     }
 

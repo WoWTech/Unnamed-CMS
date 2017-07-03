@@ -15,7 +15,7 @@ return [
       [
           'name' => 'Warsong Gluth',
           'ip'   => '127.0.0.1', // Convention
-          'port' => 3306
+          'port' => 8085
       ]
     )
 
