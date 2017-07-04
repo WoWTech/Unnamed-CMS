@@ -42,15 +42,27 @@ class Server
 
         return (object) array('status' => $result, 'name' => $realms[0]['name'], 'port' => $realms[0]['port'], 'ip' => $realms[0]['ip']);
     }
-    
+
     private static function getOnlinePlayers()
     {
-        $playersOnline = DB::connection('characters')->table('characters')->where('online', 0)->get(['name', 'race', 'class', 'level']);
+        $playersOnline = DB::connection('characters')->table('characters')->where('online', 1)->get(['name', 'race', 'class', 'level']);
 
         $allianceOnline = $playersOnline->whereIn('race', [1,3,4,7,11])->count();
         $hordeOnline    = $playersOnline->whereIn('race', [2,5,6,8,10])->count();
 
+        $playersOnline->transform(function ($item, $key) {
+            $item->faction = static::extractFaction($item->race);
+            return $item;
+        });
+
         return (object) array('all' => $playersOnline, 'horde' => $hordeOnline, 'alliance' => $allianceOnline);
+    }
+
+    private static function extractFaction($race)
+    {
+        $horde = array(2, 5, 6, 8, 10);
+
+        return in_array($race, $horde) ? 'horde' : 'alliance';
     }
 
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Services\Server;
 
 class PagesController extends Controller
 {
@@ -13,7 +14,7 @@ class PagesController extends Controller
      */
     public function __construct()
     {
-      
+
     }
 
     /**
@@ -24,5 +25,12 @@ class PagesController extends Controller
     public function index()
     {
         return view('pages.index');
+    }
+
+    public function online()
+    {
+        $players = Server::playersOnline();
+
+        return view('pages.online', compact('players'));
     }
 }
