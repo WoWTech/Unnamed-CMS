@@ -181,6 +181,23 @@ article > header > time {
   height: 100%;
   margin-left: 10px;
 }
+article > header > .action-buttons {
+  margin-left: 10px;
+}
+article > header > .action-buttons > a {
+  display: inline-block;
+  text-decoration: none;
+  width: 20px;
+  height: 20px;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+article > header > .action-buttons > a.edit {
+  background-image: url("../images/edit.png");
+}
+article > header > .action-buttons > a.delete {
+  background-image: url("../images/delete.png");
+}
 article > p.article-content {
   border: 1px solid rgba(149, 152, 154, 0.3);
   border-radius: 3px;

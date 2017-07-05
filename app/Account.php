@@ -60,4 +60,13 @@ class Account extends Authenticatable
         $this->attributes['sha_pass_hash'] = strtoupper(sha1(strtoupper($this->attributes['username']).':'.strtoupper($value)));
     }
 
+    // This is the TEMPORARY method to somehow authorize user
+    // permissions wich will be REPLACED with full ACL system
+    // using roles and permissions.
+    
+    public function isStuffMember()
+    {
+        return \DB::connection('auth')->table('account_access')->whereId($this->id)->where('gmlevel', '>=', 3)->first() === null ? false : true;
+    }
+
 }

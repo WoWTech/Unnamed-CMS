@@ -25,6 +25,19 @@ class PostsController extends Controller
         return view('posts.show', compact('post'));
     }
 
+    public function edit(Post $post)
+    {
+        return view('posts.edit', compact('post'));
+    }
+
+    public function update(Post $post)
+    {
+        $this->postValidation();
+        $post->update(request(['title', 'content']));
+
+        return redirect()->route('posts.show', ['id' => $post->id]);
+    }
+
     public function create()
     {
         return view('posts.create');
@@ -32,10 +45,7 @@ class PostsController extends Controller
 
     public function store()
     {
-        $this->validate(request(), [
-          'title' => 'required|min:2,max:50',
-          'content'  => 'required|min:3,max:3000'
-        ]);
+        $this->postValidation();
 
         Post::create([
             'title'      => request('title'),
@@ -44,5 +54,20 @@ class PostsController extends Controller
         ]);
 
         return redirect('/');
+    }
+
+    public function destroy(Post $post)
+    {
+        $post->detele();
+
+        return redirect('/');
+    }
+
+    private function postValidation()
+    {
+        $this->validate(request(), [
+          'title' => 'required|min:2,max:50',
+          'content'  => 'required|min:3,max:3000'
+        ]);
     }
 }
