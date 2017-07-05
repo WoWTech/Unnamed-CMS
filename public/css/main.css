@@ -181,10 +181,11 @@ article > header > time {
   height: 100%;
   margin-left: 10px;
 }
-article > header > .action-buttons {
+.action-buttons {
   margin-left: 10px;
+  display: inline-block;
 }
-article > header > .action-buttons > a {
+.action-buttons > a {
   display: inline-block;
   text-decoration: none;
   width: 20px;
@@ -192,10 +193,10 @@ article > header > .action-buttons > a {
   background-position: center center;
   background-repeat: no-repeat;
 }
-article > header > .action-buttons > a.edit {
+.action-buttons > a.edit {
   background-image: url("../images/edit.png");
 }
-article > header > .action-buttons > a.delete {
+.action-buttons > a.delete {
   background-image: url("../images/delete.png");
 }
 article > p.article-content {
