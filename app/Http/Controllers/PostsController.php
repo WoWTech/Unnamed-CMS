@@ -58,7 +58,7 @@ class PostsController extends Controller
 
     public function destroy(Post $post)
     {
-        $post->detele();
+        $post->delete();
 
         return redirect('/');
     }
