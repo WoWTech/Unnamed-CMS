@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Post;
+use App\Comment;
 
 class PostsController extends Controller
 {
@@ -15,14 +16,16 @@ class PostsController extends Controller
 
     public function index()
     {
-        $posts = Post::latest()->get();
+        $posts = Post::latest()->simplePaginate(10);
 
         return view('posts.index', compact('posts'));
     }
 
     public function show(Post $post)
     {
-        return view('posts.show', compact('post'));
+        $comments = Comment::with('account')->wherePostId($post->id)->simplePaginate(10);
+
+        return view('posts.show', compact('post', 'comments'));
     }
 
     public function edit(Post $post)

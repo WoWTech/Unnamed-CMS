@@ -7,5 +7,7 @@
       @include('posts.post')
     @endforeach
 
+    {{ $posts->links() }}
+
   </section>
 @endsection
