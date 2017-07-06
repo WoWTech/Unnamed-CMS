@@ -18,4 +18,9 @@ class Post extends Model
         $this->belongsTo(Account::class);
     }
 
+    function setContentAttribute($value)
+    {
+        $this->attributes['content'] = trim($value);
+    }
+
 }

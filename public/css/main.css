@@ -208,6 +208,7 @@ article > p.article-content {
   font-size: 14px;
   text-align: justify;
   color: #191B1D;
+  white-space: pre-line;
 }
 aside {
   width: 255px;
@@ -397,6 +398,7 @@ aside {
 .comment-content > .comment-body {
   padding-top: 5px;
   text-align: justify;
+  white-space: pre-line;
 }
 .input-comment-area {
   font-size: 15px;

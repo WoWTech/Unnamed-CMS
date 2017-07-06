@@ -9,9 +9,8 @@
         <time datetime="{{ $post->created_at }}">{{ $post->created_at->toFormattedDateString() }}</time>
       </header>
 
-      <p class="article-content">
-        {{ $post->content }}
-      </p>
+      <p class="article-content">{{ $post->content }}</p>
+      
       @if(count($comments) || Auth::check())
         <section class="page-content">
           <header>

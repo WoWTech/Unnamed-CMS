@@ -12,8 +12,6 @@
         </div>
       @endif
     </div>
-    <div class="comment-body">
-      {{ $comment->content }}
-    </div>
+    <div class="comment-body">{{ $comment->content }}</div>
   </div>
 </div>

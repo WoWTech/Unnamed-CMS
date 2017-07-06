@@ -12,8 +12,6 @@
     @endif
   </header>
 
-  <p class="article-content">
-    {{ $post->content }}
-  </p>
+  <p class="article-content">{{ $post->content }}</p>
 
 </article>
