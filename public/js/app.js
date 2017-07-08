@@ -16,4 +16,10 @@ $(document).ready(function(){
 
     });
 
+    $('.slider-dot').click(function() {
+        let val = $(this).index() * 100;
+        
+        $('.slider-images')[0].style.transform = `translateX(-${val}%)`;
+    });
+
 });

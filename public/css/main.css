@@ -32,12 +32,13 @@ body {
 }
 .slider {
   margin-right: 25px;
+  overflow: hidden;
 }
 .slider-images {
   display: flex;
   height: 260px;
   width: 600px;
-  overflow: hidden;
+  transition: 800ms;
 }
 .slider-buttons {
   display: flex;
