@@ -5,6 +5,7 @@
 }
 body {
   font-family: "SL";
+  padding-bottom: 150px;
 }
 .upper-body {
     background-image: url("../images/bg.png");
