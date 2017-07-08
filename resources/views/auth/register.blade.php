@@ -6,6 +6,9 @@
       <h2>Registration</h2>
     </header>
     <form action="{{ route('register') }}" method="POST">
+
+      @include('layouts.input_errors')
+
       {{ csrf_field() }}
       <div class="input-group">
         <label for="username">Login</label>
