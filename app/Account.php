@@ -13,8 +13,6 @@ class Account extends Authenticatable
 
     protected $table = 'account';
 
-    public $timestamps = false;
-
     /**
      * The attributes that are mass assignable.
      *
@@ -32,6 +30,9 @@ class Account extends Authenticatable
     protected $hidden = [
         'sha_pass_hash',
     ];
+    protected $dates = ['joindate'];
+
+    public $timestamps = false;
 
     public function comments()
     {
@@ -63,7 +64,7 @@ class Account extends Authenticatable
     // This is the TEMPORARY method to somehow authorize user
     // permissions wich will be REPLACED with full ACL system
     // using roles and permissions.
-    
+
     public function isStuffMember()
     {
         return \DB::connection('auth')->table('account_access')->whereId($this->id)->where('gmlevel', '>=', 3)->first() === null ? false : true;
