@@ -15,7 +15,7 @@ class Post extends Model
 
     public function account()
     {
-        $this->belongsTo(Account::class);
+        return $this->belongsTo(Account::class);
     }
 
     function setContentAttribute($value)
