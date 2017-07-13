@@ -18,3 +18,7 @@ Route::get('/online', 'PagesController@online')->name('online');
 Route::post('posts/{post}/comments', 'CommentsController@store');
 Route::resource('posts', 'PostsController');
 Route::resource('posts.comments', 'CommentsController');
+
+Route::namespace('Admin')->prefix('admin')->group(function() {
+    Route::get('/', 'DashboardController@index')->name('dashboard');
+});
