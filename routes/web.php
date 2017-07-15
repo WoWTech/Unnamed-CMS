@@ -21,4 +21,8 @@ Route::resource('posts.comments', 'CommentsController');
 
 Route::namespace('Admin')->prefix('admin')->group(function() {
     Route::get('/', 'DashboardController@index')->name('dashboard');
-});
+    Route::get('posts/', 'DashboardController@allPosts')->name('all-posts');
+    Route::get('posts/{post}/edit', 'DashboardController@editPost')->name('edit-post');
+    Route::get('posts/create', 'DashboardController@createPost')->name('create-post');
+    Route::post('getusers', 'DashboardController@getUsers');
+  });

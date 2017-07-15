@@ -3,8 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Post;
-use App\Comment;
+use App\{Post, Comment, Account};
 
 class PostsController extends Controller
 {
@@ -36,7 +35,17 @@ class PostsController extends Controller
     public function update(Post $post)
     {
         $this->postValidation();
-        $post->update(request(['title', 'content']));
+        $this->validate(request(), [
+            'account_id' => 'sometimes|required|numeric'
+        ]);
+
+        $post->title = request()->title;
+        $post->content = request()->content;
+
+        if ( isset(request()->account_id) )
+            $post->account()->associate(Account::findOrFail(request()->account_id));
+
+        $post->save();
 
         return redirect()->route('posts.show', ['id' => $post->id]);
     }

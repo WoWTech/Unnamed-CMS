@@ -22,7 +22,7 @@
     </section>
 
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script type="text/javascript" src="{{ asset('js/admin.js') }}"></script>
+    @yield('javascript')
 </body>
 
 </html>

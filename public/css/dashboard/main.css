@@ -239,6 +239,7 @@ a.action-badge {
   max-width: 100%;
   padding: 10px;
   font-family: "Semi";
+  font-size: 14px;
 }
 .input-group > input[type="submit"] {
   background-color: #3EBC30;
@@ -246,4 +247,35 @@ a.action-badge {
   color: #ffffff;
   cursor: pointer;
   margin-right: 10px;
+}
+ul#ajax-users-list {
+    list-style-type: none;
+    width: 100%;
+    background-color: white;
+    padding: 10px;
+    border: 1px solid #dedede;
+}
+ul#ajax-users-list > li {
+  line-height: 30px;
+  border-bottom: 1px solid #e4e4e4;
+  cursor: pointer;
+}
+ul#ajax-users-list > li:last-child {
+  border-bottom: none;
+}
+ul.pagination {
+  list-style-type: none;
+  display: flex;
+  justify-content: center;
+}
+ul.pagination > li {
+  display: inline-block;
+  margin: 0 5px;
+}
+ul.pagination > li > span, ul.pagination > li > a {
+  text-decoration: none;
+  border: 1px solid rgba(41, 72, 106, 0.2);
+  border-radius: 3px;
+  padding: 2px 5px;
+  color: #191B1D;
 }
