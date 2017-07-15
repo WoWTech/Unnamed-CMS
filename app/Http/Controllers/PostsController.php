@@ -15,9 +15,16 @@ class PostsController extends Controller
 
     public function index()
     {
-        $posts = Post::latest()->simplePaginate(10);
+        if ($this->isAdminRequest())
+        {
+            return $this->adminIndex();
+        }
+        else
+        {
+            $posts = Post::latest()->simplePaginate(10);
 
-        return view('posts.index', compact('posts'));
+            return view('posts.index', compact('posts'));
+        }
     }
 
     public function show(Post $post)
@@ -29,7 +36,7 @@ class PostsController extends Controller
 
     public function edit(Post $post)
     {
-        return view('posts.edit', compact('post'));
+        return $this->isAdminRequest() ? view('admin.posts.edit', compact('post')) : view('posts.edit', compact('post'));
     }
 
     public function update(Post $post)
@@ -52,7 +59,7 @@ class PostsController extends Controller
 
     public function create()
     {
-        return view('posts.create');
+        return $this->isAdminRequest() ? view('admin.posts.create') : view('posts.create');
     }
 
     public function store()
@@ -73,6 +80,20 @@ class PostsController extends Controller
         $post->delete();
 
         return redirect('/');
+    }
+
+    private function adminIndex()
+    {
+        $posts = Post::with('account');
+
+        if (request()->keywords)
+            $posts->where('content', 'LIKE', '%'.request()->keywords.'%');
+
+        $posts = $posts->paginate(10);
+
+        request()->flashOnly(['keywords']);
+
+        return view('admin.posts.index', compact('posts'));
     }
 
     private function postValidation()

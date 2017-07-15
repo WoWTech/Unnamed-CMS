@@ -6,7 +6,7 @@
   </header>
 
   <div class="content-wrapper">
-    <form action="{{ route('posts.update', $post) }}" method="POST">
+    <form action="{{ route('admin.posts.update', $post) }}" method="POST">
       {{ csrf_field() }}
       {{ method_field('PATCH') }}
       <div class="input-group">

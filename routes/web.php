@@ -19,10 +19,8 @@ Route::post('posts/{post}/comments', 'CommentsController@store');
 Route::resource('posts', 'PostsController');
 Route::resource('posts.comments', 'CommentsController');
 
-Route::namespace('Admin')->prefix('admin')->group(function() {
-    Route::get('/', 'DashboardController@index')->name('dashboard');
-    Route::get('posts/', 'DashboardController@allPosts')->name('all-posts');
-    Route::get('posts/{post}/edit', 'DashboardController@editPost')->name('edit-post');
-    Route::get('posts/create', 'DashboardController@createPost')->name('create-post');
-    Route::post('getusers', 'DashboardController@getUsers');
+Route::prefix('admin')->group(function() {
+    Route::get('/', 'Admin\DashboardController@index')->name('dashboard');
+    Route::resource('posts', 'PostsController', ['as' => 'admin']);
+    Route::post('getusers', 'Admin\AjaxController@getUsers');
   });

@@ -6,7 +6,7 @@
   </header>
 
   <div class="content-wrapper">
-    <form action="{{ route('posts.store') }}" method="POST">
+    <form action="{{ route('admin.posts.store') }}" method="POST">
       {{ csrf_field() }}
       <div class="input-group">
         <label for="title">Title</label>
