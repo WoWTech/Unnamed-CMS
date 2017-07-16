@@ -25,7 +25,7 @@
         @foreach($posts as $post)
           <tr>
             <td>{{ $post->title }}</td>
-            <td>{{ $post->shortDescription(100) }}</td>
+            <td>{{ $post->getDescription('content') }}</td>
             <td>{{ $post->account->username }}</td>
             <td>{{ $post->created_at->toFormattedDateString() }}</td>
             <td><a href="{{ route('admin.posts.edit', $post) }}">Edit</a> <a href="{{ route('admin.posts.destroy', $post) }}" data-method="DELETE" class="method-link">Delete</a></td>
