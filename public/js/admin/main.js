@@ -49,3 +49,9 @@ let getUsers = () =>
         _token: $("meta[name='_token']").attr('content')
     }, showUsers);
 }
+
+let setActiveLink = name =>
+{
+    $("ul.side-menu li a").removeClass('active');
+    $(`ul.side-menu li a#${name}-link`).addClass('active');
+}

@@ -38,4 +38,7 @@
 
 @section('javascript')
     <script src="{{ asset('js/app.js') }}" charset="utf-8"></script>
+    <script type="text/javascript">
+        setActiveLink('comments');
+    </script>
 @endsection

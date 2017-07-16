@@ -96,3 +96,9 @@
 
   </div>
 @endsection
+
+@section('javascript')
+  <script type="text/javascript">
+      setActiveLink('dashboard');
+  </script>
+@endsection

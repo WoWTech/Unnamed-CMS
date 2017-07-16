@@ -65,6 +65,9 @@ aside > ul > li > a {
   border-bottom: 1px solid #8E8E8E;
   transition: 300ms;
 }
+aside > ul > li > a:hover {
+  color: white;
+}
 aside > ul > li > a.active {
   color: white;
 }
