@@ -3,9 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\StringManipulation;
 
 class Comment extends Model
 {
+    use StringManipulation;
 
     protected $fillable = ['content', 'account_id', 'post_id'];
 
