@@ -21,6 +21,7 @@ Route::resource('posts.comments', 'CommentsController');
 
 Route::prefix('admin')->group(function() {
     Route::get('/', 'Admin\DashboardController@index')->name('dashboard');
-    Route::resource('posts', 'PostsController', ['as' => 'admin']);
     Route::post('getusers', 'Admin\AjaxController@getUsers');
+    Route::resource('posts', 'PostsController', ['as' => 'admin']);
+    Route::resource('comments', 'CommentsController', ['as' => 'admin', 'only' => ['index', 'edit', 'destroy']]);
   });

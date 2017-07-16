@@ -13,9 +13,34 @@ class CommentsController extends Controller
         $this->middleware('auth');
     }
 
+    public function index()
+    {
+        if (!$this->isAdminRequest())
+            abort(403, 'Access denied');
+
+        $comments = Comment::with
+        (
+          [
+            'account' => function($query) {
+              $query->select('id', 'username');
+            },
+            'post' => function($query) {
+              $query->select('id', 'title');
+            }
+          ]
+        )->select('id', 'account_id', 'post_id', 'content', 'created_at');
+
+        if (request()->keywords)
+            $comments->where('content', 'LIKE', '%'.request()->keywords.'%');
+
+        $comments = $comments->paginate(10);
+
+        return view('admin.comments.index', compact('comments'));
+    }
+
     public function edit(Post $post, Comment $comment)
     {
-        return view('comments.edit', compact('post', 'comment'));
+        return $this->isAdminRequest() ? view('admin.comments.edit', compact('comment')) : view('comments.edit', compact('post', 'comment'));
     }
 
     public function update(Post $post, Comment $comment)
@@ -24,7 +49,7 @@ class CommentsController extends Controller
 
         $comment->update(request(['content']));
 
-        return redirect()->route('posts.show', $post);
+        return $this->isAdminRequest() ? redirect()->route('admin.comments.index') : redirect()->route('posts.show', $post);
     }
 
     public function store(Post $post)

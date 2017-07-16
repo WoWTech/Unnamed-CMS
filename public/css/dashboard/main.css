@@ -267,6 +267,7 @@ ul.pagination {
   list-style-type: none;
   display: flex;
   justify-content: center;
+  margin: 10px 0px;
 }
 ul.pagination > li {
   display: inline-block;
