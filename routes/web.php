@@ -24,4 +24,5 @@ Route::prefix('admin')->group(function() {
     Route::post('getusers', 'Admin\AjaxController@getUsers');
     Route::resource('posts', 'PostsController', ['as' => 'admin']);
     Route::resource('comments', 'CommentsController', ['as' => 'admin', 'only' => ['index', 'edit', 'destroy']]);
+    Route::resource('accounts', 'AccountsController', ['as' => 'admin', 'except' => ['show']]);
   });
