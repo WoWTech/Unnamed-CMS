@@ -4,29 +4,20 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Laratrust\Traits\LaratrustUserTrait;
 
 class Account extends Authenticatable
 {
-    use Notifiable;
+    use LaratrustUserTrait, Notifiable;
 
     protected $connection = 'auth';
 
     protected $table = 'account';
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
     protected $fillable = [
         'username', 'password', 'email', 'expansion'
     ];
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
     protected $hidden = [
         'sha_pass_hash',
     ];
