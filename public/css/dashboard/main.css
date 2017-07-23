@@ -283,3 +283,10 @@ ul.pagination > li > span, ul.pagination > li > a {
   padding: 2px 5px;
   color: #191B1D;
 }
+.roles-array {
+  display: flex;
+  flex-direction: row;
+}
+.role-block {
+  margin: 0 5px;
+}

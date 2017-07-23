@@ -26,6 +26,17 @@
         <input id="expansion" type="number" name="expansion" min="1" max="6" value="{{ $account->expansion }}">
       </div>
       <div class="input-group">
+        <label for="expansion">Site roles</label>
+        <div class="roles-array">
+          @foreach ($roles as $role)
+            <div class="role-block">
+              <input type="checkbox" name="roles[]" value="{{ $role->id }}" {{ !Auth::user()->hasRole($role->name) ?: 'checked' }}>
+              <span class="role-caption">{{ ucfirst($role->name) }}</span>
+            </div>
+          @endforeach
+        </div>
+      </div>
+      <div class="input-group">
         <input type="submit" name="submit" value="Save account" >
       </div>
     </form>

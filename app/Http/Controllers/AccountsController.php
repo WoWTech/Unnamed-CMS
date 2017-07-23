@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Account;
+use App\{Account, Role};
 use Auth;
 
 class AccountsController extends Controller
@@ -73,7 +73,9 @@ class AccountsController extends Controller
         if (!Auth::user()->can('update-user'))
             return abort(403);
 
-        return view('admin.accounts.edit', compact('account'));
+        $roles = Role::get(['id', 'name']);
+
+        return view('admin.accounts.edit', compact('account', 'roles'));
     }
 
     /**
@@ -101,6 +103,9 @@ class AccountsController extends Controller
             $account->password = request()->password;
 
         $account->save();
+
+        if (request()->roles)
+            $account->syncRoles(request()->roles);
 
         return redirect()->route('admin.accounts.index');
 
