@@ -65,7 +65,7 @@
                 <td>{{ $comment->account->username }}</td>
                 <td>{{ $comment->created_at->toFormattedDateString() }}</td>
                 <td>
-                  @permission('edit-comment')
+                  @permission('update-comment')
                     <a href="{{ route('admin.comments.edit', $comment) }}">Edit</a>
                   @endpermission
                   @permission('delete-comment')
@@ -101,7 +101,7 @@
                 <td>{{ $user->email }}</td>
                 <td>{{ $user->joindate->toFormattedDateString() }}</td>
                 <td>
-                  @permission('edit-user')
+                  @permission('update-user')
                     <a href="{{ route('admin.accounts.edit', $user) }}">Edit</a>
                   @endpermission
                   @permission('delete-user')
