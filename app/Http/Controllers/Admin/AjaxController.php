@@ -4,10 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Account;
 
 class AjaxController extends Controller
 {
-  
+
     public function getUsers()
     {
         $this->validate(request(), [
