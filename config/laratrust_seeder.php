@@ -2,27 +2,24 @@
 
 return [
     'role_structure' => [
-        'superadministrator' => [
-            'users' => 'c,r,u,d',
-            'acl' => 'c,r,u,d',
-            'profile' => 'r,u'
-        ],
         'administrator' => [
-            'users' => 'c,r,u,d',
-            'profile' => 'r,u'
+            'dashboard' => 'v',
+            'user' => 'c,v,u,d',
+        ],
+        'moderator' => [
+            'post' => 'c,u,d',
+            'comment' => 'v,u,d',
         ],
         'user' => [
-            'profile' => 'r,u'
-        ],
-    ],
-    'permission_structure' => [
-        'cru_user' => [
-            'profile' => 'c,r,u'
+            'post' => 'v',
+            'comment' => 'c',
+            'own-comment' => 'u',
+            'own-post' => 'u',
         ],
     ],
     'permissions_map' => [
         'c' => 'create',
-        'r' => 'read',
+        'v' => 'view',
         'u' => 'update',
         'd' => 'delete'
     ]
