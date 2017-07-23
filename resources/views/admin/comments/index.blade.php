@@ -27,7 +27,14 @@
             <td>{{ $comment->getDescription('content', 100) }}</td>
             <td>{{ !is_null($comment->account) ? $comment->account->username : "Not connected with any account" }}</td>
             <td>{{ $comment->created_at->toFormattedDateString() }}</td>
-            <td><a href="{{ route('admin.comments.edit', $comment) }}">Edit</a> <a href="{{ route('admin.comments.destroy', $comment) }}" data-method="DELETE" class="method-link">Delete</a></td>
+            <td>
+              @permission('edit-comment')
+                <a href="{{ route('admin.comments.edit', $comment) }}">Edit</a>
+              @endpermission
+              @permission('delete-comment')
+                <a href="{{ route('admin.comments.destroy', $comment) }}" data-method="DELETE" class="method-link">Delete</a>
+              @endpermission
+            </td>
           </tr>
         @endforeach
       </tbody>

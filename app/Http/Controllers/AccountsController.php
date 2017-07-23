@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Account;
+use Auth;
 
 class AccountsController extends Controller
 {
@@ -33,6 +34,9 @@ class AccountsController extends Controller
      */
     public function create(Account $account)
     {
+        if (!Auth::user()->can('create-user'))
+            return abort(403);
+
         return view('admin.accounts.create', compact($account));
     }
 
@@ -44,6 +48,9 @@ class AccountsController extends Controller
      */
     public function store()
     {
+        if (!Auth::user()->can('create-user'))
+            return abort(403);
+
         $this->validate(request(), [
             'username' => 'required|string|max:16|unique:auth.account',
             'email' => 'required|string|email|max:32|unique:auth.account',
@@ -63,6 +70,9 @@ class AccountsController extends Controller
      */
     public function edit(Account $account)
     {
+        if (!Auth::user()->can('update-user'))
+            return abort(403);
+
         return view('admin.accounts.edit', compact('account'));
     }
 
@@ -75,6 +85,9 @@ class AccountsController extends Controller
      */
     public function update(Account $account)
     {
+        if (!Auth::user()->can('update-user'))
+            return abort(403);
+
         $this->validate(request(), [
             'username'  => 'alpha_num|between:3,16',
             'email'     => 'email',
@@ -101,6 +114,9 @@ class AccountsController extends Controller
      */
     public function destroy(Account $account)
     {
+        if (!Auth::user()->can('delete-user'))
+            return abort(403);
+
         $account->delete();
 
         return redirect()->route('admin.accounts.index');

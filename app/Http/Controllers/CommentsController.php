@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Post;
-use App\Comment;
+use App\{Post, Comment};
+use Auth;
 
 class CommentsController extends Controller
 {
@@ -40,11 +40,18 @@ class CommentsController extends Controller
 
     public function edit(Post $post, Comment $comment)
     {
+        if (!Auth::user()->can('edit-comment') && Auth::user()->canAndOwns('update-own-comment', $comment))
+            return abort(403);
+
         return $this->isAdminRequest() ? view('admin.comments.edit', compact('comment')) : view('comments.edit', compact('post', 'comment'));
     }
 
     public function update(Post $post, Comment $comment)
     {
+
+        if (!Auth::user()->can('edit-comment') && Auth::user()->canAndOwns('update-own-comment', $comment))
+            return abort(403);
+
         $this->validateRequest();
 
         $comment->update(request(['content']));
@@ -54,6 +61,9 @@ class CommentsController extends Controller
 
     public function store(Post $post)
     {
+        if (!Auth::user()->can('create-comment'))
+            return abort(403);
+
         $this->validateRequest();
 
         Comment::create([
@@ -67,6 +77,9 @@ class CommentsController extends Controller
 
     public function destroy(Post $post, Comment $comment)
     {
+        if (!Auth::user()->can('delete-comment') && Auth::user()->canAndOwns('delete-own-comment', $comment))
+            return abort(403);
+
         $comment->delete();
 
         return back();

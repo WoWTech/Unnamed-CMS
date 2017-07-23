@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\{Post, Comment, Account};
+use Auth;
 
 class PostsController extends Controller
 {
@@ -29,6 +30,9 @@ class PostsController extends Controller
 
     public function show(Post $post)
     {
+        if (!Auth::user()->can('view-post'))
+            return abort(403);
+
         $comments = Comment::with('account')->wherePostId($post->id)->simplePaginate(10);
 
         return view('posts.show', compact('post', 'comments'));
@@ -36,11 +40,17 @@ class PostsController extends Controller
 
     public function edit(Post $post)
     {
+        if (!Auth::user()->can('edit-post') && !Auth::user()->canAndOwns('update-own-post', $post))
+            return abort(403);
+
         return $this->isAdminRequest() ? view('admin.posts.edit', compact('post')) : view('posts.edit', compact('post'));
     }
 
     public function update(Post $post)
     {
+        if (!Auth::user()->can('edit-post') && !Auth::user()->canAndOwns('update-own-post', $post))
+            return abort(403);
+
         $this->postValidation();
         $this->validate(request(), [
             'account_id' => 'sometimes|required|numeric'
@@ -59,11 +69,17 @@ class PostsController extends Controller
 
     public function create()
     {
+        if (!Auth::user()->can('create-post'))
+            return abort(403);
+
         return $this->isAdminRequest() ? view('admin.posts.create') : view('posts.create');
     }
 
     public function store()
     {
+        if (!Auth::user()->can('create-post'))
+          return abort(403);
+
         $this->postValidation();
 
         Post::create([
@@ -77,6 +93,9 @@ class PostsController extends Controller
 
     public function destroy(Post $post)
     {
+        if (!Auth::user()->can('delete-post') && !Auth::user()->canAndOwns('delete-own-post', $post))
+          return abort(403);
+
         $post->delete();
 
         return redirect('/');
