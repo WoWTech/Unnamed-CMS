@@ -4,7 +4,7 @@
   <header>
     <h2>Dashboard</h2>
   </header>
-  
+
   <div class="content">
 
     <div class="card">
@@ -30,10 +30,10 @@
                 <td>{{ $post->created_at->toFormattedDateString() }}</td>
                 <td>
                   @permission('update-post')
-                    <a href="{{ route('admin.posts.edit', $post)}}">Edit</a>
+                    <a href="{{ route('admin.posts.edit', $post) }}">Edit</a>
                   @endpermission
                   @permission('delete-post')
-                    <a href="{{ route('admin.posts.destroy', $post)}}" class="method-link" data-method="DELETE">Delete</a>
+                    <a href="{{ route('admin.posts.destroy', $post) }}" class="method-link" data-method="DELETE">Delete</a>
                   @endpermission
                 </td>
               </tr>
@@ -64,7 +64,14 @@
                 <td>{{ $comment->content }}</td>
                 <td>{{ $comment->account->username }}</td>
                 <td>{{ $comment->created_at->toFormattedDateString() }}</td>
-                <td><a href="#">Edit</a> <a href="#">Delete</a></td>
+                <td>
+                  @permission('edit-comment')
+                    <a href="{{ route('admin.comments.edit', $comment) }}">Edit</a>
+                  @endpermission
+                  @permission('delete-comment')
+                    <a href="{{ route('admin.comments.destroy', $comment)}}" class="method-link" data-method="DELETE">Delete</a>
+                  @endpermission
+                </td>
               </tr>
             @endforeach
           </tbody>
@@ -93,7 +100,14 @@
                 <td>{{ $user->username }}</td>
                 <td>{{ $user->email }}</td>
                 <td>{{ $user->joindate->toFormattedDateString() }}</td>
-                <td><a href="#">Edit</a> <a href="#">Delete</a></td>
+                <td>
+                  @permission('edit-user')
+                    <a href="{{ route('admin.accounts.edit', $user) }}">Edit</a>
+                  @endpermission
+                  @permission('delete-user')
+                    <a href="{{ route('admin.accounts.destroy', $user)}}" class="method-link" data-method="DELETE">Delete</a>
+                  @endpermission
+                </td>
               </tr>
             @endforeach
           </tbody>

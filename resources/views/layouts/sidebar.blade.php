@@ -20,7 +20,9 @@
               </div>
 
               <div class="user-buttons">
-                  <a href="#" class="btn red-bg">Control panel</a>
+                @permission('view-dashboard')
+                  <a href="{{ route('dashboard') }}" class="btn red-bg">Control panel</a>
+                @endpermission
                   <a href="#" class="btn blue-bg">Account settings</a>
               </div>
 
