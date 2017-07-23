@@ -29,7 +29,7 @@
             <td>{{ $account->joindate->toFormattedDateString() }}</td>
             <td>{{ $account->last_ip }}</td>
             <td>
-              @permission('edit-user')
+              @permission('update-user')
                 <a href="{{ route('admin.accounts.edit', $account) }}">Edit</a>
               @endpermission
               @permission('delete-user')

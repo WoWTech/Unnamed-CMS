@@ -28,7 +28,7 @@
             <td>{{ !is_null($comment->account) ? $comment->account->username : "Not connected with any account" }}</td>
             <td>{{ $comment->created_at->toFormattedDateString() }}</td>
             <td>
-              @permission('edit-comment')
+              @permission('update-comment')
                 <a href="{{ route('admin.comments.edit', $comment) }}">Edit</a>
               @endpermission
               @permission('delete-comment')
