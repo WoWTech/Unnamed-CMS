@@ -10,8 +10,8 @@
       </header>
 
       <p class="article-content">{{ $post->content }}</p>
-      
-      @if(count($comments) || Auth::check())
+
+      @if($comments->isNotEmpty() || Laratrust::can('create-comment'))
         <section class="page-content">
           <header>
             <h2>Comments</h2>
@@ -23,9 +23,9 @@
 
           {{ $comments->links()}}
 
-          @if (Auth::check())
+          @permission('create-comment')
             @include('posts.add_comment');
-          @endif
+          @endpermission
 
         </section>
       @endif

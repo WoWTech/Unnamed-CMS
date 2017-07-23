@@ -19,7 +19,7 @@ Route::post('posts/{post}/comments', 'CommentsController@store');
 Route::resource('posts', 'PostsController');
 Route::resource('posts.comments', 'CommentsController');
 
-Route::prefix('admin')->group(function() {
+Route::middleware('permission:view-dashboard')->prefix('admin')->group(function() {
     Route::get('/', 'Admin\DashboardController@index')->name('dashboard');
     Route::post('getusers', 'Admin\AjaxController@getUsers');
     Route::resource('posts', 'PostsController', ['as' => 'admin']);

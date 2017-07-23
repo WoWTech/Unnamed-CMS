@@ -4,7 +4,7 @@
   <header>
     <h2>Dashboard</h2>
   </header>
-
+  
   <div class="content">
 
     <div class="card">
@@ -28,7 +28,14 @@
                 <td>{{ $post->title }}</td>
                 <td>{{ $post->account->username }}</td>
                 <td>{{ $post->created_at->toFormattedDateString() }}</td>
-                <td><a href="#">Edit</a> <a href="#">Delete</a></td>
+                <td>
+                  @permission('update-post')
+                    <a href="{{ route('admin.posts.edit', $post)}}">Edit</a>
+                  @endpermission
+                  @permission('delete-post')
+                    <a href="{{ route('admin.posts.destroy', $post)}}" class="method-link" data-method="DELETE">Delete</a>
+                  @endpermission
+                </td>
               </tr>
             @endforeach
           </tbody>

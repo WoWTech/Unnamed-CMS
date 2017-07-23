@@ -28,7 +28,14 @@
             <td>{{ $post->getDescription('content') }}</td>
             <td>{{ $post->account->username }}</td>
             <td>{{ $post->created_at->toFormattedDateString() }}</td>
-            <td><a href="{{ route('admin.posts.edit', $post) }}">Edit</a> <a href="{{ route('admin.posts.destroy', $post) }}" data-method="DELETE" class="method-link">Delete</a></td>
+            <td>
+              @permission('edit-post')
+                <a href="{{ route('admin.posts.edit', $post) }}">Edit</a>
+              @endpermission
+              @permission('delete-post')
+              <a href="{{ route('admin.posts.destroy', $post) }}" data-method="DELETE" class="method-link">Delete</a>
+              @endpermission
+            </td>
           </tr>
         @endforeach
       </tbody>

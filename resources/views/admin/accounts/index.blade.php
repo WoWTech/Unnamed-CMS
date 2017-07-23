@@ -28,7 +28,14 @@
             <td>{{ $account->email }}</td>
             <td>{{ $account->joindate->toFormattedDateString() }}</td>
             <td>{{ $account->last_ip }}</td>
-            <td><a href="{{ route('admin.accounts.edit', $account) }}">Edit</a> <a href="{{ route('admin.accounts.destroy', $account) }}" data-method="DELETE" class="method-link">Delete</a></td>
+            <td>
+              @permission('edit-user')
+                <a href="{{ route('admin.accounts.edit', $account) }}">Edit</a>
+              @endpermission
+              @permission('delete-user')
+              <a href="{{ route('admin.accounts.destroy', $account) }}" data-method="DELETE" class="method-link">Delete</a>
+              @endpermission
+            </td>
           </tr>
         @endforeach
       </tbody>
