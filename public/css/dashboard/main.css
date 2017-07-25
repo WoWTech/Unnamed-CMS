@@ -17,7 +17,7 @@ body > header {
   width: 100%;
   height: 60px;
   align-items: center;
-  background-color: rgba(2, 32, 51, 0.95);
+  background-color: rgba(2, 23, 37, 0.95);
   -webkit-box-shadow: 0 3px 3px rgba(0, 0, 0, 0.19);
   box-shadow: 0 3px 3px rgba(0, 0, 0, 0.19);
 }
@@ -30,7 +30,7 @@ body > header {
 .user-panel {
   display: flex;
   height: 100%;
-  background-color: rgb(19, 60, 86);
+  background-color: rgb(15, 47, 68);
   padding: 0 10px;
   -ms-align-items: center;
   align-items: center;
