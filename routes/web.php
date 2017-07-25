@@ -25,4 +25,5 @@ Route::middleware('permission:view-dashboard')->prefix('admin')->group(function(
     Route::resource('posts', 'PostsController', ['as' => 'admin']);
     Route::resource('comments', 'CommentsController', ['as' => 'admin', 'only' => ['index', 'edit', 'destroy']]);
     Route::resource('accounts', 'AccountsController', ['as' => 'admin', 'except' => ['show']]);
+    Route::resource('roles', 'Admin\RolesController', ['as' => 'admin', 'except' => ['show']]);
   });

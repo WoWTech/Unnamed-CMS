@@ -5,6 +5,7 @@ return [
         'administrator' => [
             'dashboard' => 'v',
             'user' => 'c,v,u,d',
+            'role' => 'c,v,u,d',
         ],
         'moderator' => [
             'post' => 'c,u,d',

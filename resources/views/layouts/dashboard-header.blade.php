@@ -5,6 +5,6 @@
 
   <div class="user-panel">
     <img src="{{ asset('images/user_avatar.png') }}" alt="">
-    <span>Placeholder</span>
+    <span>{{ Auth::user()->username }}</span>
   </div>
 </header>

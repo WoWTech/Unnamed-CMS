@@ -17,7 +17,7 @@ body > header {
   width: 100%;
   height: 60px;
   align-items: center;
-  background-color: #373737;
+  background-color: rgba(2, 32, 51, 0.95);
   -webkit-box-shadow: 0 3px 3px rgba(0, 0, 0, 0.19);
   box-shadow: 0 3px 3px rgba(0, 0, 0, 0.19);
 }
@@ -30,7 +30,7 @@ body > header {
 .user-panel {
   display: flex;
   height: 100%;
-  background-color: #505050;
+  background-color: rgb(19, 60, 86);
   padding: 0 10px;
   -ms-align-items: center;
   align-items: center;
@@ -45,8 +45,7 @@ body > header {
 }
 aside {
   width: 250px;
-  background-color: #484848;
-  font-size: 18px "SL";
+  background-color: #010a0f;
   margin-top: 60px;
 }
 aside > ul.side-menu {
@@ -61,8 +60,8 @@ aside > ul > li > a {
   font-size: 18px;
   line-height: 40px;
   padding-left: 20px;
-  color: #CCCCCC;
-  border-bottom: 1px solid #8E8E8E;
+  color: #ababab;
+  border-bottom: 1px solid #313131;
   transition: 300ms;
 }
 aside > ul > li > a:hover {
@@ -289,4 +288,21 @@ ul.pagination > li > span, ul.pagination > li > a {
 }
 .role-block {
   margin: 0 5px;
+}
+.role-details {
+  width: 100%;
+  display: flex;
+}
+.role-details > div {
+  width: 50%;
+  margin: 0px 10px;
+}
+.role-permissions > h3{
+  margin-bottom: 10px;
+}
+.input-errors {
+  padding: 10px 10px 10px 30px;
+  background-color: #ff8c8c;
+  color: white;
+  border: 1px solid rgb(239, 34, 34);
 }
