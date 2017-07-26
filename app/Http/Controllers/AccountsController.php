@@ -73,7 +73,7 @@ class AccountsController extends Controller
         if (!Auth::user()->can('update-user'))
             return abort(403);
 
-        $roles = Role::get(['id', 'name']);
+        $roles = Role::get(['id', 'name', 'display_name']);
 
         return view('admin.accounts.edit', compact('account', 'roles'));
     }

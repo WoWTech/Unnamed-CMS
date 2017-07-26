@@ -40,7 +40,7 @@ class CommentsController extends Controller
 
     public function edit(Post $post, Comment $comment)
     {
-        if (!Auth::user()->can('edit-comment') && Auth::user()->canAndOwns('update-own-comment', $comment))
+        if (!Auth::user()->can('update-comment') && Auth::user()->canAndOwns('update-own-comment', $comment))
             return abort(403);
 
         return $this->isAdminRequest() ? view('admin.comments.edit', compact('comment')) : view('comments.edit', compact('post', 'comment'));
@@ -49,7 +49,7 @@ class CommentsController extends Controller
     public function update(Post $post, Comment $comment)
     {
 
-        if (!Auth::user()->can('edit-comment') && Auth::user()->canAndOwns('update-own-comment', $comment))
+        if (!Auth::user()->can('update-comment') && Auth::user()->canAndOwns('update-own-comment', $comment))
             return abort(403);
 
         $this->validateRequest();
