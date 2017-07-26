@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\{Post, Comment};
-use Auth;
+use Laratrust;
 
 class CommentsController extends Controller
 {
@@ -40,7 +40,7 @@ class CommentsController extends Controller
 
     public function edit(Post $post, Comment $comment)
     {
-        if (!Auth::user()->can('update-comment') && Auth::user()->canAndOwns('update-own-comment', $comment))
+        if (!Laratrust::can('update-comment') && Laratrust::canAndOwns('update-own-comment', $comment))
             return abort(403);
 
         return $this->isAdminRequest() ? view('admin.comments.edit', compact('comment')) : view('comments.edit', compact('post', 'comment'));
@@ -49,7 +49,7 @@ class CommentsController extends Controller
     public function update(Post $post, Comment $comment)
     {
 
-        if (!Auth::user()->can('update-comment') && Auth::user()->canAndOwns('update-own-comment', $comment))
+        if (!Laratrust::can('update-comment') && Laratrust::canAndOwns('update-own-comment', $comment))
             return abort(403);
 
         $this->validateRequest();
@@ -61,7 +61,7 @@ class CommentsController extends Controller
 
     public function store(Post $post)
     {
-        if (!Auth::user()->can('create-comment'))
+        if (!Laratrust::can('create-comment'))
             return abort(403);
 
         $this->validateRequest();
@@ -77,7 +77,7 @@ class CommentsController extends Controller
 
     public function destroy(Post $post, Comment $comment)
     {
-        if (!Auth::user()->can('delete-comment') && Auth::user()->canAndOwns('delete-own-comment', $comment))
+        if (!Laratrust::can('delete-comment') && Laratrust::canAndOwns('delete-own-comment', $comment))
             return abort(403);
 
         $comment->delete();

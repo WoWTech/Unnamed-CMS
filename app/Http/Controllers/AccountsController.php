@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\{Account, Role};
-use Auth;
+use Laratrust;
 
 class AccountsController extends Controller
 {
@@ -34,7 +34,7 @@ class AccountsController extends Controller
      */
     public function create(Account $account)
     {
-        if (!Auth::user()->can('create-user'))
+        if (!Laratrust::can('create-user'))
             return abort(403);
 
         return view('admin.accounts.create', compact($account));
@@ -48,7 +48,7 @@ class AccountsController extends Controller
      */
     public function store()
     {
-        if (!Auth::user()->can('create-user'))
+        if (!Laratrust::can('create-user'))
             return abort(403);
 
         $this->validate(request(), [
@@ -70,7 +70,7 @@ class AccountsController extends Controller
      */
     public function edit(Account $account)
     {
-        if (!Auth::user()->can('update-user'))
+        if (!Laratrust::can('update-user'))
             return abort(403);
 
         $roles = Role::get(['id', 'name', 'display_name']);
@@ -87,7 +87,7 @@ class AccountsController extends Controller
      */
     public function update(Account $account)
     {
-        if (!Auth::user()->can('update-user'))
+        if (!Laratrust::can('update-user'))
             return abort(403);
 
         $this->validate(request(), [
@@ -119,7 +119,7 @@ class AccountsController extends Controller
      */
     public function destroy(Account $account)
     {
-        if (!Auth::user()->can('delete-user'))
+        if (!Laratrust::can('delete-user'))
             return abort(403);
 
         $account->delete();

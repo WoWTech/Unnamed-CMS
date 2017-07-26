@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\{Role, Permission};
-use Auth;
+use Laratrust;
 
 class RolesController extends Controller
 {
@@ -27,7 +27,7 @@ class RolesController extends Controller
      */
     public function create()
     {
-        if (!Auth::user()->can('create-role'))
+        if (!Laratrust::can('create-role'))
             return abort(403);
 
         $permissions = Permission::get(['id', 'name', 'display_name']);
@@ -43,7 +43,7 @@ class RolesController extends Controller
      */
     public function store()
     {
-        if (!Auth::user()->can('create-role'))
+        if (!Laratrust::can('create-role'))
             return abort(403);
 
         $this->validateRole();
@@ -74,7 +74,7 @@ class RolesController extends Controller
      */
     public function edit(Role $role)
     {
-        if (!Auth::user()->can('update-role'))
+        if (!Laratrust::can('update-role'))
             return abort(403);
 
         $permissions = Permission::get(['id', 'name', 'display_name', 'description']);
@@ -91,7 +91,7 @@ class RolesController extends Controller
      */
     public function update(Role $role)
     {
-        if (!Auth::user()->can('update-role'))
+        if (!Laratrust::can('update-role'))
             return abort(403);
 
         $this->validateRole();
@@ -111,7 +111,7 @@ class RolesController extends Controller
      */
     public function destroy(Role $role)
     {
-        if (!Auth::user()->can('delete-role'))
+        if (!Laratrust::can('delete-role'))
             return abort(403);
 
         $role->delete();

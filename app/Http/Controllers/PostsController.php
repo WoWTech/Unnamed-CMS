@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\{Post, Comment, Account};
-use Auth;
+use Laratrust;
 
 class PostsController extends Controller
 {
@@ -30,7 +30,7 @@ class PostsController extends Controller
 
     public function show(Post $post)
     {
-        if (!Auth::user()->can('view-post'))
+        if (auth()->check() && !Laratrust::can('view-post'))
             return abort(403);
 
         $comments = Comment::with('account')->wherePostId($post->id)->simplePaginate(10);
@@ -40,7 +40,7 @@ class PostsController extends Controller
 
     public function edit(Post $post)
     {
-        if (!Auth::user()->can('edit-post') && !Auth::user()->canAndOwns('update-own-post', $post))
+        if (!Laratrust::can('edit-post') && !Laratrust::canAndOwns('update-own-post', $post))
             return abort(403);
 
         return $this->isAdminRequest() ? view('admin.posts.edit', compact('post')) : view('posts.edit', compact('post'));
@@ -48,7 +48,7 @@ class PostsController extends Controller
 
     public function update(Post $post)
     {
-        if (!Auth::user()->can('edit-post') && !Auth::user()->canAndOwns('update-own-post', $post))
+        if (!Laratrust::can('edit-post') && !Laratrust::canAndOwns('update-own-post', $post))
             return abort(403);
 
         $this->postValidation();
@@ -69,7 +69,7 @@ class PostsController extends Controller
 
     public function create()
     {
-        if (!Auth::user()->can('create-post'))
+        if (!Laratrust::can('create-post'))
             return abort(403);
 
         return $this->isAdminRequest() ? view('admin.posts.create') : view('posts.create');
@@ -77,7 +77,7 @@ class PostsController extends Controller
 
     public function store()
     {
-        if (!Auth::user()->can('create-post'))
+        if (!Laratrust::can('create-post'))
           return abort(403);
 
         $this->postValidation();
@@ -93,7 +93,7 @@ class PostsController extends Controller
 
     public function destroy(Post $post)
     {
-        if (!Auth::user()->can('delete-post') && !Auth::user()->canAndOwns('delete-own-post', $post))
+        if (!Laratrust::can('delete-post') && !Laratrust::canAndOwns('delete-own-post', $post))
           return abort(403);
 
         $post->delete();
