@@ -64,4 +64,9 @@ class RegisterController extends Controller
     {
         return Account::create($data);
     }
+
+    protected function registered($request, $user)
+    {
+        $user->attachRole('user');
+    }
 }
