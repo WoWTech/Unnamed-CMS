@@ -7,6 +7,9 @@
 
   <div class="content-wrapper">
     <form action="{{ route('admin.accounts.update', $account) }}" method="POST">
+
+      @include('layouts.input_errors')
+
       {{ csrf_field() }}
       {{ method_field('PATCH') }}
       <div class="input-group">
@@ -30,7 +33,7 @@
         <div class="roles-array">
           @foreach ($roles as $role)
             <div class="role-block">
-              <input type="checkbox" name="roles[]" value="{{ $role->id }}" {{ !Auth::user()->hasRole($role->name) ?: 'checked' }}>
+              <input type="checkbox" name="roles[]" value="{{ $role->id }}" {{ !$account->hasRole($role->name) ?: 'checked' }}>
               <span class="role-caption">{{ $role->display_name }}</span>
             </div>
           @endforeach

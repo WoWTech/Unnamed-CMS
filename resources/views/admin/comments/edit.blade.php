@@ -7,6 +7,9 @@
 
   <div class="content-wrapper">
     <form action="{{ route('admin.comments.update', $comment) }}" method="POST">
+      
+      @include('layouts.input_errors')
+
       {{ csrf_field() }}
       {{ method_field('PATCH') }}
       <div class="input-group">

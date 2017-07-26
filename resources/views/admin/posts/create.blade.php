@@ -7,6 +7,9 @@
 
   <div class="content-wrapper">
     <form action="{{ route('admin.posts.store') }}" method="POST">
+
+      @include('layouts.input_errors')
+      
       {{ csrf_field() }}
       <div class="input-group">
         <label for="title">Title</label>
