@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Post;
-use App\Comment;
+use App\{Post, Comment};
+use Laratrust;
 
 class CommentsController extends Controller
 {
@@ -13,22 +13,57 @@ class CommentsController extends Controller
         $this->middleware('auth');
     }
 
+    public function index()
+    {
+        if (!$this->isAdminRequest())
+            abort(403, 'Access denied');
+
+        $comments = Comment::with
+        (
+          [
+            'account' => function($query) {
+              $query->select('id', 'username');
+            },
+            'post' => function($query) {
+              $query->select('id', 'title');
+            }
+          ]
+        )->select('id', 'account_id', 'post_id', 'content', 'created_at');
+
+        if (request()->keywords)
+            $comments->where('content', 'LIKE', '%'.request()->keywords.'%');
+
+        $comments = $comments->paginate(10);
+
+        return view('admin.comments.index', compact('comments'));
+    }
+
     public function edit(Post $post, Comment $comment)
     {
-        return view('comments.edit', compact('post', 'comment'));
+        if (!Laratrust::can('update-comment') && Laratrust::canAndOwns('update-own-comment', $comment))
+            return abort(403);
+
+        return $this->isAdminRequest() ? view('admin.comments.edit', compact('comment')) : view('comments.edit', compact('post', 'comment'));
     }
 
     public function update(Post $post, Comment $comment)
     {
+
+        if (!Laratrust::can('update-comment') && Laratrust::canAndOwns('update-own-comment', $comment))
+            return abort(403);
+
         $this->validateRequest();
 
         $comment->update(request(['content']));
 
-        return redirect()->route('posts.show', $post);
+        return $this->isAdminRequest() ? redirect()->route('admin.comments.index') : redirect()->route('posts.show', $post);
     }
 
     public function store(Post $post)
     {
+        if (!Laratrust::can('create-comment'))
+            return abort(403);
+
         $this->validateRequest();
 
         Comment::create([
@@ -42,6 +77,9 @@ class CommentsController extends Controller
 
     public function destroy(Post $post, Comment $comment)
     {
+        if (!Laratrust::can('delete-comment') && Laratrust::canAndOwns('delete-own-comment', $comment))
+            return abort(403);
+
         $comment->delete();
 
         return back();

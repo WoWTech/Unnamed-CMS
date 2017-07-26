@@ -29,6 +29,15 @@ class Server
         return $online;
     }
 
+    public static function uptime()
+    {
+        $uptime = Cache::remember('server_uptine', 0.1 , function () {
+            return static::getServerUptime();
+        });
+
+        return $uptime;
+    }
+
 
     // For now it's hardcoded, because the only template we got
     // at the moment supports only 1 realm.
@@ -56,6 +65,23 @@ class Server
         });
 
         return (object) array('all' => $playersOnline, 'horde' => $hordeOnline, 'alliance' => $allianceOnline);
+    }
+
+    private static function getServerUptime()
+    {
+        $uptime = DB::connection('auth')->table('uptime')->orderBy('starttime', 'desc')->limit(1)->get(['uptime'])->first()->uptime;
+        $sec = $uptime%60;
+
+        $uptime = intval($uptime/60);
+        $min = $uptime%60;
+
+        $uptime = intval($uptime/60);
+        $hours = $uptime%24;
+
+        $uptime = intval($uptime/24);
+        $days = $uptime;
+
+        return (object) array('days' => $days, 'hours' => $hours, 'minutes' => $min, 'seconds' => $sec);
     }
 
     private static function extractFaction($race)

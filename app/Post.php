@@ -3,9 +3,13 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\StringManipulation;
 
 class Post extends Model
 {
+  
+    use StringManipulation;
+
     protected $fillable = ['title', 'content', 'account_id', 'post_id'];
 
     public function comments()
@@ -15,10 +19,10 @@ class Post extends Model
 
     public function account()
     {
-        $this->belongsTo(Account::class);
+        return $this->belongsTo(Account::class);
     }
 
-    function setContentAttribute($value)
+    public function setContentAttribute($value)
     {
         $this->attributes['content'] = trim($value);
     }

@@ -26,11 +26,15 @@
 
             <div class="server-details">
                 <span class="badge rounded">
-        <span class="light-blue">{{ $online->alliance }}</span> <span style="color:#95989A">/</span> <span class="red">{{ $online->horde }}</span>
+                  <span class="light-blue">
+                    {{ $online->alliance }}
+                  </span>
+                  <span style="color:#95989A">/</span>
+                  <span class="red">{{ $online->horde }}</span>
                 </span>
-                <span class="badge rounded green">
-        25 hours 15 minutes uptime
-      </span>
+                <span class="badge rounded {{ $realm->status ? 'green' : 'red' }}">
+                  {{ $realm->status ? "$uptime->hours hours $uptime->minutes minutes uptime" : 'Server is offline' }}
+                </span>
             </div>
 
             <div class="server-modes">

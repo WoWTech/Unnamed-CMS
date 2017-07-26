@@ -16,9 +16,10 @@ class AppServiceProvider extends ServiceProvider
     {
         view()->composer('layouts.page-header', function($view)
         {
-            $realm = Server::status();
+            $realm  = Server::status();
             $online = Server::playersOnline();
-            $view->with('realm', $realm)->with('online', $online);
+            $uptime = Server::uptime();
+            $view->with('realm', $realm)->with('online', $online)->with('uptime', $uptime);
         });
     }
 

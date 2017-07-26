@@ -4,34 +4,26 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Laratrust\Traits\LaratrustUserTrait;
 
 class Account extends Authenticatable
 {
-    use Notifiable;
+    use LaratrustUserTrait, Notifiable;
 
     protected $connection = 'auth';
 
     protected $table = 'account';
 
-    public $timestamps = false;
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
     protected $fillable = [
-        'username', 'password', 'email',
+        'username', 'password', 'email', 'expansion'
     ];
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
     protected $hidden = [
         'sha_pass_hash',
     ];
+    protected $dates = ['joindate'];
+
+    public $timestamps = false;
 
     public function comments()
     {
@@ -63,7 +55,7 @@ class Account extends Authenticatable
     // This is the TEMPORARY method to somehow authorize user
     // permissions wich will be REPLACED with full ACL system
     // using roles and permissions.
-    
+
     public function isStuffMember()
     {
         return \DB::connection('auth')->table('account_access')->whereId($this->id)->where('gmlevel', '>=', 3)->first() === null ? false : true;
