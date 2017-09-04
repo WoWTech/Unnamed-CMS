@@ -8,7 +8,7 @@ class Category extends Model
 {
     protected $connection = 'mysql';
 
-    public function children()
+    public function forums()
     {
         return $this->hasMany(Category::class, 'parent_id');
     }

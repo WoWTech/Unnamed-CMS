@@ -15,6 +15,7 @@ Auth::routes();
 
 Route::get('/', 'PostsController@index')->name('home');
 Route::get('/online', 'PagesController@online')->name('online');
+Route::get('forum', 'ForumController@index')->name('forum');
 Route::post('posts/{post}/comments', 'CommentsController@store');
 Route::resource('posts', 'PostsController');
 Route::resource('posts.comments', 'CommentsController');
