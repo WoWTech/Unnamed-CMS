@@ -28,7 +28,7 @@
   <div class="forum">
     @yield('content')
   </div>
-
+    @yield('javascript')
 </body>
 
 </html>
