@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Topic;
+use App\{Topic, Category};
+use Laratrust;
 
 class TopicsController extends Controller
 {
@@ -13,9 +14,24 @@ class TopicsController extends Controller
         //
     }
 
-    public function store(Request $request)
+    public function store(Request $request, Category $category)
     {
-        
+        if (!Laratrust::can('create-forum-topic'))
+            return abort(403);
+
+        $this->validate(request(), [
+          'title' => 'required|max:75',
+          'content' => 'required|max:2000'
+        ]);
+
+        $topic = Topic::create([
+          'title'       => request('title'),
+          'content'     => request('content'),
+          'category_id' => $category->id,
+          'account_id'  => \Auth::id()
+        ]);
+
+        return redirect()->route('forum.topic', [$category->category_slug, $topic->topic_id]);
     }
 
     public function show($category, Topic $topic)

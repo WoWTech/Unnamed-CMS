@@ -8,6 +8,8 @@ class Topic extends Model
 {
     protected $connection = 'mysql';
 
+    protected $fillable = ['title', 'content', 'account_id', 'category_id'];
+
     public function category()
     {
         return $this->belongsTo(Category::class);
