@@ -15,7 +15,10 @@ Auth::routes();
 
 Route::get('/', 'PostsController@index')->name('home');
 Route::get('/online', 'PagesController@online')->name('online');
-Route::get('forum', 'ForumController@index')->name('forum');
+Route::get('forum', 'CategoryController@index')->name('forum');
+Route::get('forum/{slug}', 'CategoryController@show')->name('category');
+Route::get('forum/{category}/{topic}', 'TopicsController@show')->name('forum.topic');
+Route::post('forum/{category}/', 'TopicsController@store')->name('forum.topic.create');
 Route::post('posts/{post}/comments', 'CommentsController@store');
 Route::resource('posts', 'PostsController');
 Route::resource('posts.comments', 'CommentsController');

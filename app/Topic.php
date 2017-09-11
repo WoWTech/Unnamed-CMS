@@ -17,4 +17,9 @@ class Topic extends Model
     {
         return $this->hasMany(Reply::class);
     }
+
+    public function account()
+    {
+        return $this->belongsTo(Account::class);
+    }
 }

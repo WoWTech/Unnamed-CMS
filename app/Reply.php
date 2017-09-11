@@ -12,4 +12,9 @@ class Reply extends Model
     {
         return $this->belongsTo(Topic::class);
     }
+
+    public function account()
+    {
+        return $this->belongsTo(Account::class);
+    }
 }

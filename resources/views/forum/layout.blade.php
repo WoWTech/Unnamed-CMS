@@ -21,13 +21,16 @@
     <a href="#">User panel</a>
     <a href="#">Players Online</a>
     <div class="user-bar">
-      AlexBuddy01
+      @if (Auth::check())
+        {{ Auth::user()->username }}
+      @endif
     </div>
   </nav>
 
   <div class="forum">
     @yield('content')
   </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     @yield('javascript')
 </body>
 

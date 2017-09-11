@@ -3,56 +3,39 @@
 @section('content')
   <section class="category">
     <header>
-      <span class="logo" style="background-image:url('images/cat-img.png')"></span>
+      <span class="logo" style="background-image:url('/images/cat-img.png')"></span>
       <h2>{{ $category->name }}</h2>
 
       <aside>
         <input type="text" name="search">
-        <a href="#" id="new-topic" class="new-topic red-button">New topic</a>
+        <a href="javascript:void(0)" id="new-topic" class="new-topic red-button {{ !Auth::check() ? 'disabled' : '' }}">New topic</a>
       </aside>
     </header>
 
     <div class="content">
-      @permission('create-forum-topic')
-      <div class="create-topic-block">
-        <div class="user-info">
-          <span class="user-avatar" style="background-image:url('images/user-avatar.png')"></span>
-          <div class="account-details">
-            <span class="username">
-              Aailom
-            </span>
-            <span class="group">
-              Customer Service
-            </span>
-            <span class="posts">
-              115 posts
-            </span>
-          </div>
-        </div>
-        @endpermission
-
-        <div class="topic-details">
-          <input type="text">
-          <textarea name="" id="" rows="10"></textarea>
-          <input type="submit" name="" class="red-button" value="Post">
-        </div>
-
-      </div>
+      @include('forum.new_topic')
       <table>
         <tbody>
-          @foreach ($category->topics as $topic)
-            <tr class="topic" data-id="1">
+          @if ($topics->isEmpty())
+            <div class="no-topics">
+              No topics in this category :(
+            </div>
+          @endif
+          @foreach ($topics as $topic)
+            <tr class="topic" data-id="{{ $topic->id }}">
               <td class="topic-title">
-                <div class="manage-topic"></div>
+                @permission('edit-forum-topic')
+                  <div class="manage-topic"></div>
+                @endpermission
                 <i class="topic-icon"></i>
-                {{ $topic->name }}
+                <a href="{{ route('forum.topic', [$category->category_slug, $topic])}}">{{ $topic->title }}</a>
               </td>
               <td class="topic-replies">
                 <i class="replies-icon"></i>
-                {{ $topic->replies }}
+                {{ $topic->replies->count() }}
               </td>
               <td class="topic-author">
-                {{ $topic->author->username }}
+                {{ $topic->account->username }}
               </td>
               <td class="topic-timestamp">
                 <time>{{ $topic->updated_at->diffForHumans() }}</time>
@@ -61,7 +44,8 @@
           @endforeach
         </tbody>
       </table>
-      <a href="#" class="next-page">Next</a>
+      {{ $topics->links() }}
+      {{-- <a href="#" class="next-page">Next</a> --}}
     </div>
 
   </section>
@@ -69,6 +53,10 @@
 
 @section('javascript')
   <script type="text/javascript">
+    $('#new-topic').click(function() {
+        let display = $('.create-topic-block').css('display') == 'none' ? 'flex' : 'none';
+        $('.create-topic-block').css('display', display);
+    });
     $(".manage-topic").click(function() {
 
       if ($(this).next('.manage-topic-actions').length > 0) {

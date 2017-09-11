@@ -140,7 +140,7 @@ nav > div.user-bar {
   text-align: center;
   color:white;
 }
-.topic-details > input[type="submit"] {
+.topic-details > form > input[type="submit"] {
   border: none;
   margin-left: auto;
   cursor: pointer;
@@ -195,14 +195,16 @@ a.next-page {
 }
 .user-info  {
   display: flex;
-  margin-right: 30px;
+  margin-right: 15px;
   flex-shrink: 0;
+  width: 195px;
 }
 .user-info > .user-avatar {
   width: 75px;
   height: 75px;
   display: block;
   margin-right: 15px;
+  flex-shrink: 0;
 }
 .account-details {
   display: flex;
@@ -225,14 +227,19 @@ span.posts {
 }
 .topic-title {
   position: relative;
+  width: 720px;
+}
+.topic-title > a{
+  color: white;
+  text-decoration: none;
 }
 .topic-details {
   display: flex;
   flex-direction: column;
 }
-.topic-details > input,
-.topic-details > textarea,
-.reply-content > textarea {
+.topic-details > form > input,
+.topic-details > form > textarea,
+.reply-content > form > textarea {
   font-size: 16px;
   color: #eaeaea;
   border: 1px solid #175A92;
@@ -242,7 +249,7 @@ span.posts {
   box-sizing: border-box;
   max-width: 670px;
 }
-.topic-details > input {
+.topic-details > form > input {
   height: 35px;
   width: 670px;
   padding: 0 10px;
@@ -308,7 +315,8 @@ span.posts {
 }
 .guest-reply-content {
   display: flex;
-  direction: row;
+  position: relative;
+  right: -20px;
 }
 .empty-username {
   width: 115px;
@@ -340,6 +348,15 @@ span.posts {
 }
 .empty-textarea > .buttons > a {
   margin: 0 20px;
+  color: white;
+  text-decoration: none;
+  background: #3a97ce;
+  padding: 5px 10px;
+  width: 85px;
+  text-align: center;
+}
+.empty-textarea > .buttons > a.register-button {
+  background: #e25a5a;
 }
 .empty-textarea > .buttons > p {
   font-family: "SB";
@@ -390,7 +407,41 @@ textarea {
 .manage-topic-actions > ul > li:last-child {
   border-bottom: none;
 }
-
+.no-topics {
+  color: white;
+  text-align: center;
+  height: 150px;
+  line-height: 150px;
+  font-size: 18px;
+  border: 1px solid #147cad;
+  margin: 10px 0;
+}
+.pagination {
+  list-style-type: none;
+  display: flex;
+  justify-content: center;
+}
+.pagination > li {
+  margin: 5px;
+}
+.pagination > li.disabled {
+  display: none;
+}
+.pagination > li > a {
+  display: block;
+  width: 170px;
+  height: 35px;
+  text-decoration: none;
+  color: white;
+  background-color: rgba(0, 149, 248, 0.23);
+  font-size: 18px;
+  line-height: 30px;
+  text-align: center;
+  margin: 10px auto;
+}
+a.disabled {
+  cursor: not-allowed;
+}
 .right {
   margin-left: auto;
 }
