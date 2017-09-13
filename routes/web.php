@@ -19,6 +19,7 @@ Route::get('forum', 'CategoryController@index')->name('forum');
 Route::get('forum/{slug}', 'CategoryController@show')->name('category');
 Route::get('forum/{category}/{topic}', 'TopicsController@show')->name('forum.topic');
 Route::post('forum/{category}/', 'TopicsController@store')->name('forum.topic.create');
+Route::post('forum/{category}/{topic}', 'TopicsController@store_reply')->name('forum.topic.reply.create');
 Route::post('posts/{post}/comments', 'CommentsController@store');
 Route::resource('posts', 'PostsController');
 Route::resource('posts.comments', 'CommentsController');

@@ -34,11 +34,25 @@ class TopicsController extends Controller
         return redirect()->route('forum.topic', [$category->category_slug, $topic->topic_id]);
     }
 
+    public function store_reply($category, Topic $topic)
+    {
+        $this->validate(request(), [
+            'content' => 'required|max:2000'
+        ]);
+
+        $topic->replies()->create([
+            'content'  => request('content'),
+            'account_id'  => \Auth::id()
+        ]);
+
+        return back();
+    }
+
     public function show($category, Topic $topic)
     {
-      $replies = $topic->replies()->simplePaginate(1);
+        $replies = $topic->replies()->simplePaginate(1);
 
-      return view('forum.categories.topic', compact('topic', 'replies'));
+        return view('forum.categories.topic', compact('topic', 'replies'));
     }
 
     public function edit($id)

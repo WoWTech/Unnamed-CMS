@@ -275,6 +275,10 @@ span.posts {
 .topic-reply:hover > .manage-reply {
   display: block;
 }
+.reply-content > form {
+  display: flex;
+  flex-direction: column;
+}
 .reply-content > time {
   margin-bottom: 5px;
   display: block;
@@ -374,8 +378,17 @@ section.reply {
 textarea {
   width: 100%;
   max-width: 825px !important;
+  min-width: 825px !important;
+  height: 180px;
+  font-size: 16px;
+  color: #eaeaea;
+  border: 1px solid #175A92;
+  background-color: #1F3955;
+  margin-bottom: 10px;
+  padding: 10px;
+  box-sizing: border-box;
 }
-.reply-content > input[type="submit"] {
+.reply-content > form > input[type="submit"] {
   border: none;
   font-size: 16px;
   cursor: pointer;

@@ -8,6 +8,8 @@ class Reply extends Model
 {
     protected $connection = 'mysql';
 
+    protected $fillable = ['content', 'user_id', 'account_id'];
+
     public function topic()
     {
         return $this->belongsTo(Topic::class);

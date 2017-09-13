@@ -95,7 +95,7 @@
               <div class="reply-content" style="align-items: flex-end">
                 <form action="{{ route('forum.topic.reply.create', [$topic->category->category_slug, $topic->id])}}" method="post">
                     {{ csrf_field() }}
-                    <textarea name="" id="" rows="10"></textarea>
+                    <textarea name="content" id="" rows="10"></textarea>
                     <input type="submit" class="red-button right" value="Post reply">
                 </form>
               </div>
