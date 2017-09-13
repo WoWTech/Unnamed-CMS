@@ -50,9 +50,9 @@ class TopicsController extends Controller
 
     public function show($category, Topic $topic)
     {
-        $replies = $topic->replies()->simplePaginate(1);
+        $replies = $topic->replies()->simplePaginate(10);
 
-        return view('forum.categories.topic', compact('topic', 'replies'));
+        return view('forum.categories.topic', compact('category', 'topic', 'replies'));
     }
 
     public function edit($id)

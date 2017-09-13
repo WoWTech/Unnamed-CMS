@@ -249,6 +249,20 @@ span.posts {
   box-sizing: border-box;
   max-width: 670px;
 }
+.reply-content > form > input[type="submit"] {
+  width: 175px;
+  height: 35px;
+  text-decoration: none;
+  background-color: #E25A5A;
+  font-size: 16px;
+  font-family: "Semi";
+  line-height: 35px;
+  text-align: center;
+  color: white;
+  margin-left: auto;
+  right: 15px;
+  position: relative;
+}
 .topic-details > form > input {
   height: 35px;
   width: 670px;

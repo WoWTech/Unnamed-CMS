@@ -37,13 +37,13 @@
 
       </div>
       @foreach ($replies as $reply)
-        <div class="topic-reply" data-id="{{ $reply->id }}">
+        <div class="topic-reply">
           @if (Laratrust::canAndOwns(['update-own-topic-reply', 'delete-own-topic-reply'], $reply) || Laratrust::can(['edit-topic-reply', 'delete-topic-reply']))
             <div class="manage-reply"></div>
             <div class="manage-topic-actions" onmouseleave="closeActionsMenu(this)" style="display: none;">
               <ul>
                 @if (Laratrust::canAndOwns('update-own-reply', $reply) || Laratrust::can('update-topic-reply'))
-                  <li><a href="/topic/{{ $topic->id }}/reply/{{ $reply->id }}" class="method-link" data-method='PUT'>Edit</a></li>
+                  <li><a href="javascript:void(0)" data-id="{{ $reply->id }}" class="method-link edit-link" data-method='PUT'>Edit</a></li>
                 @endif
                 @if (Laratrust::canAndOwns('delete-own-reply', $reply) || Laratrust::can('delete-topic-reply'))
                   <li><a href="/topic/{{ $topic->id }}/reply/{{ $reply->id }}" class="method-link" data-method='DELETE'>Delete</a></li>
@@ -66,7 +66,7 @@
             </div>
           </div>
 
-          <div class="reply-content">
+          <div class="reply-content"data-id="{{ $reply->id }}">
             <time>{{ $reply->created_at->diffForHumans() }}</time>
             <p>{{ $reply->content }}</p>
           </div>
@@ -79,16 +79,16 @@
         @permission('create-topic-reply')
           <section class="reply">
               <div class="user-info">
-                <span class="user-avatar" style="background-image:url('images/user-avatar.png')"></span>
+                <span class="user-avatar" style="background-image:url('/images/user-avatar.png')"></span>
                 <div class="account-details">
                   <span class="username">
-                    Aailom
+                    {{ Auth::user()->username }}
                   </span>
                   <span class="group">
-                    Customer Service
+                    {{ Auth::user()->top_role }}
                   </span>
                   <span class="posts">
-                    115 posts
+                    {{ Auth::user()->posts_count }} posts
                   </span>
                 </div>
               </div>
@@ -139,6 +139,19 @@
 @section('javascript')
 <script src="/js/app.js" charset="utf-8"></script>
 <script>
+  $('.edit-link').click(function() {
+      let id = $(this).data('id');
+      let content = $(`.reply-content[data-id=${id}]>p`).html();
+      let $form = $("<form action='{{route('forum.topic.reply.update', [$category, $topic])}}' method='POST'></form>");
+      $form.append('{{ method_field('PATCH') }}');
+      $form.append('{{ csrf_field() }}');
+      $form.append(`<textarea name="content">${content}</textarea>`);
+      $form.append(`<input type="submit">`);
+      $(`.reply-content[data-id=${id}]>p`).css('display', 'none');
+
+      $(`.reply-content[data-id=${id}]`).append($form);
+  });
+
   $(".manage-reply").click(function() {
     if ($(this).next('.manage-topic-actions').length > 0) {
         $(this).next('.manage-topic-actions').css('display', 'block');
