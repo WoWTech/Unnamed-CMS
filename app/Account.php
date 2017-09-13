@@ -35,6 +35,11 @@ class Account extends Authenticatable
         return $this->hasMany(Topic::class);
     }
 
+    public function replies()
+    {
+        return $this->hasMany(Reply::class);
+    }
+
     public static function boot()
     {
         parent::boot();
@@ -59,7 +64,7 @@ class Account extends Authenticatable
 
     protected function getPostsCountAttribute()
     {
-        return $this->topics->count();
+        return $this->topics->count() + $this->replies->count();
     }
 
     protected function getTopRoleAttribute()
