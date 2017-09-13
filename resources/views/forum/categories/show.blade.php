@@ -24,7 +24,7 @@
           @foreach ($topics as $topic)
             <tr class="topic" data-id="{{ $topic->id }}">
               <td class="topic-title">
-                @permission('edit-forum-topic')
+                @permission('update-forum-topic')
                   <div class="manage-topic"></div>
                 @endpermission
                 <i class="topic-icon"></i>

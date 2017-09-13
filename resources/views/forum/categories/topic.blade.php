@@ -38,11 +38,11 @@
       </div>
       @foreach ($replies as $reply)
         <div class="topic-reply" data-id="{{ $reply->id }}">
-          @if (Laratrust::canAndOwns(['edit-own-reply', 'delete-own-reply'], $reply) || Laratrust::can(['edit-topic-reply', 'delete-topic-reply']))
+          @if (Laratrust::canAndOwns(['update-own-topic-reply', 'delete-own-topic-reply'], $reply) || Laratrust::can(['edit-topic-reply', 'delete-topic-reply']))
             <div class="manage-reply"></div>
             <div class="manage-topic-actions" onmouseleave="closeActionsMenu(this)" style="display: none;">
               <ul>
-                @if (Laratrust::canAndOwns('edit-own-reply', $reply) || Laratrust::can('edit-topic-reply'))
+                @if (Laratrust::canAndOwns('update-own-reply', $reply) || Laratrust::can('update-topic-reply'))
                   <li><a href="/topic/{{ $topic->id }}/reply/{{ $reply->id }}" class="method-link" data-method='PUT'>Edit</a></li>
                 @endif
                 @if (Laratrust::canAndOwns('delete-own-reply', $reply) || Laratrust::can('delete-topic-reply'))
@@ -76,7 +76,7 @@
 
       {{ $replies->links() }}
       @if (Auth::check())
-        @permission('reply-to-topic')
+        @permission('create-topic-reply')
           <section class="reply">
               <div class="user-info">
                 <span class="user-avatar" style="background-image:url('images/user-avatar.png')"></span>
@@ -93,8 +93,11 @@
                 </div>
               </div>
               <div class="reply-content" style="align-items: flex-end">
-                <textarea name="" id="" rows="10"></textarea>
-                <input type="submit" class="red-button right" value="Post reply">
+                <form action="{{ route('forum.topic.reply.create', [$topic->category->category_slug, $topic->id])}}" method="post">
+                    {{ csrf_field() }}
+                    <textarea name="" id="" rows="10"></textarea>
+                    <input type="submit" class="red-button right" value="Post reply">
+                </form>
               </div>
           </section>
         @endpermission
