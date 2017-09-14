@@ -139,13 +139,32 @@
 @section('javascript')
 <script src="/js/app.js" charset="utf-8"></script>
 <script>
+  $(document).on('submit', '.ajax-edit', function(event) {
+      event.preventDefault();
+
+      let id = $(this).data('id');
+      console.log($(this).serialize());
+      $.ajax({
+          url: $(this).attr('action'),
+          method: 'POST',
+          data: $(this).serialize()
+      }).done(function(data, status) {
+          console.log(status);
+      }).fail(function(data) {
+        console.log(data.responseText);
+      });
+
+      $(`.reply-content[data-id=${id}]`).append(`<p>${$('textarea', this).val()}`);
+      $(this).remove();
+  });
   $('.edit-link').click(function() {
       let id = $(this).data('id');
       let content = $(`.reply-content[data-id=${id}]>p`).html();
-      let $form = $("<form action='{{route('forum.topic.reply.update', [$category, $topic])}}' method='POST'></form>");
+      let $form = $("<form action='{{ route('forum.topic.reply.update', [$category, $topic]) }}' data-id='" + id + "' class='ajax-edit' method='POST'></form>");
       $form.append('{{ method_field('PATCH') }}');
       $form.append('{{ csrf_field() }}');
       $form.append(`<textarea name="content">${content}</textarea>`);
+      $form.append(`<input type="hidden" name="reply_id" value="${id}">`);
       $form.append(`<input type="submit">`);
       $(`.reply-content[data-id=${id}]>p`).css('display', 'none');
 

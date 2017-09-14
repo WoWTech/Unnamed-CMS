@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\{Topic, Category};
+use App\{Topic, Category, Reply};
 use Laratrust;
 
 class TopicsController extends Controller
@@ -63,6 +63,20 @@ class TopicsController extends Controller
     public function update(Request $request, $id)
     {
         //
+    }
+
+    public function update_reply($category, $topic)
+    {
+        $this->validate(request(), [
+            'content'  => 'required|max:2000',
+            'reply_id' => 'required|integer',
+        ]);
+
+        $reply = Reply::findOrFail(request('reply_id'));
+        $reply->update(request(['content']));
+
+        if (!request()->ajax())
+            return redirect()->route('forum.topic', [$category, $topic]);
     }
 
     public function destroy($id)
