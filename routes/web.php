@@ -17,14 +17,11 @@ Route::get(     '/',                                   'PostsController@index')-
 Route::get(     '/online',                             'PagesController@online')->name('online');
 Route::get(     'forum',                               'CategoryController@index')->name('forum');
 Route::get(     'forum/{slug}',                        'CategoryController@show')->name('category');
+Route::post(    'forum/{category}/create',             'TopicsController@store')->name('forum.topic.store');
 Route::get(     'forum/{category}/{topic}',            'TopicsController@show')->name('forum.topic');
-Route::patch(   'forum/{category}/{topic}',            'TopicsController@update')->name('forum.topic');
-Route::get(     'forum/{category}/{topic}/edit',       'TopicsController@edit')->name('forum.topic.edit');
-Route::delete(  'forum/{category}/{topic}',            'TopicsController@show')->name('forum.topic.delete');
-Route::post(    'forum/{category}/',                   'TopicsController@store')->name('forum.topic.create');
 Route::post(    'forum/{category}/{topic}/create',     'TopicsController@store_reply')->name('forum.topic.reply.create');
 Route::patch(   'forum/{category}/{topic}',            'TopicsController@update_reply')->name('forum.topic.reply.update');
-Route::delete(  'forum/{category}/{topic}/{reply}',    'TopicsController@delete_reply')->name('forum.topic.reply.delete');
+Route::delete(  'forum/{category}/{topic}/{reply}',    'TopicsController@delete_reply')->name('forum.topic.reply.destroy');
 Route::post(    'posts/{post}/comments',               'CommentsController@store');
 Route::resource('posts',                               'PostsController');
 Route::resource('posts.comments',                      'CommentsController');
@@ -44,6 +41,13 @@ Route::middleware('permission:view-dashboard')->prefix('admin')->group(function(
     Route::post('/categories/{category}/subcategories/', 'CategoryController@subcategoriesStore')->name('admin.subcategories.store');
     Route::patch('/categories/{category}/subcategories/{subcategory}', 'CategoryController@subcategoriesUpdate')->name('admin.subcategories.update');
     Route::delete('/categories/{category}/subcategories/{subcategory}', 'CategoryController@subcategoriesDestroy')->name('admin.subcategories.destroy');
+
+
+    Route::get('categories/{category}/topics', 'TopicsController@index')->name('admin.topic.index');
+    Route::get('categories/{category}/{topic}/edit', 'TopicsController@edit')->name('admin.topic.edit');
+    Route::get('categories/{category}/create', 'TopicsController@create')->name('admin.topic.create');
+    Route::patch('categories/{category}/{topic}', 'TopicsController@update')->name('admin.topic.update');
+    Route::delete('categories/{category}/{topic}', 'TopicsController@destroy')->name('admin.topic.destroy');
 
     Route::resource('categories', 'CategoryController', ['as' => 'admin', 'except' => ['show']]);
 

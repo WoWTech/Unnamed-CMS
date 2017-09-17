@@ -51,7 +51,7 @@ class CategoryController extends Controller
     public function subcategoriesUpdate(Category $category, Category $subcategory)
     {
         $this->validateSubcategory();
-        
+
         $subcategory->update(request(['name', 'category_description', 'category_slug']));
 
         return redirect()->route('admin.subcategories.index', $category);

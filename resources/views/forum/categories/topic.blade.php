@@ -16,8 +16,8 @@
         <div class="manage-reply"></div>
         <div class="manage-topic-actions" onmouseleave="closeActionsMenu(this)" style="display: none;">
           <ul>
-              <li><a href="{{ route('forum.topic.edit',   [$category, $topic]) }}" data-id="{{ $reply->id }}" class="method-link edit-link" data-method='PUT'>Edit</a></li>
-              <li><a href="{{ route('forum.topic.delete', [$category, $topic]) }}" class="method-link" data-method='DELETE'>Delete</a></li>
+              <li><a href="{{ route('admin.topic.edit',    [$category, $topic]) }}" class="method-link">Edit</a></li>
+              <li><a href="{{ route('admin.topic.destroy', [$category, $topic]) }}" class="method-link" data-method='DELETE'>Delete</a></li>
           </ul>
         </div>
         <div class="user-info">
@@ -48,10 +48,10 @@
             <div class="manage-topic-actions" onmouseleave="closeActionsMenu(this)" style="display: none;">
               <ul>
                 @if (Laratrust::canAndOwns('update-own-reply', $reply) || Laratrust::can('update-topic-reply'))
-                  <li><a href="javascript:void(0)" data-id="{{ $reply->id }}" class="method-link edit-link" data-method='PUT'>Edit</a></li>
+                  <li><a href="javascript:void(0)" data-id="{{ $reply->id }}" class="method-link edit-link">Edit</a></li>
                 @endif
                 @if (Laratrust::canAndOwns('delete-own-reply', $reply) || Laratrust::can('delete-topic-reply'))
-                  <li><a href="{{ route('forum.topic.reply.delete', [$category, $topic, $reply]) }}" class="method-link" data-method='DELETE'>Delete</a></li>
+                  <li><a href="{{ route('forum.topic.reply.destroy', [$category, $topic, $reply]) }}" class="method-link" data-method='DELETE'>Delete</a></li>
                 @endif
               </ul>
             </div>

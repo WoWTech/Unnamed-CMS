@@ -24,7 +24,7 @@
       <tbody>
         @foreach($subcategories as $subcategory)
           <tr>
-            <td>{{ $subcategory->name }}</a></td>
+            <td><a href="{{route('admin.topic.index', $subcategory)}}">{{ $subcategory->name }}</a></td>
             <td>{{ $subcategory->category_description }}</td>
             <td>
                 <a href="{{ route('admin.subcategories.edit', [$category, $subcategory]) }}">Edit</a>

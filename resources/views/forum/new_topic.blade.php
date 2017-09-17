@@ -16,7 +16,7 @@
     </div>
 
     <div class="topic-details">
-      <form action="{{ route('forum.topic.create', $category) }}" method="post">
+      <form action="{{ route('forum.topic.store', $category) }}" method="post">
         {{ csrf_field() }}
         <input type="text" name="title">
         <textarea id="" rows="10" name="content"></textarea>

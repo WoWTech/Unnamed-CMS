@@ -26,6 +26,12 @@
               <td class="topic-title">
                 @permission('update-forum-topic')
                   <div class="manage-topic"></div>
+                  <div class="manage-topic-actions" onmouseleave="closeActionsMenu(this)" style="display: none;">
+                    <ul>
+                        <li><a href="{{ route('admin.topic.edit',    [$category->category_slug, $topic]) }}" class="method-link">Edit</a></li>
+                        <li><a href="{{ route('admin.topic.destroy', [$category, $topic]) }}" class="method-link" data-method='DELETE'>Delete</a></li>
+                    </ul>
+                  </div>
                 @endpermission
                 <i class="topic-icon"></i>
                 <a href="{{ route('forum.topic', [$category->category_slug, $topic])}}">{{ $topic->title }}</a>
@@ -45,7 +51,6 @@
         </tbody>
       </table>
       {{ $topics->links() }}
-      {{-- <a href="#" class="next-page">Next</a> --}}
     </div>
 
   </section>
@@ -58,26 +63,15 @@
         $('.create-topic-block').css('display', display);
     });
     $(".manage-topic").click(function() {
-
       if ($(this).next('.manage-topic-actions').length > 0) {
           $(this).next('.manage-topic-actions').css('display', 'block');
           return;
       }
-
-      let id = $(this).parent().parent().data('id');
-      let element = `
-        <div class="manage-topic-actions" onmouseleave="closeActionsMenu(this)">
-          <ul>
-            <li><a href="/${id}">Edit</a></li>
-            <li><a href="/${id}">Delete</a></li>
-          </ul>
-        </div>
-      `
-      $(this).after(element);
     });
    function closeActionsMenu(element)
    {//do something
       $(element).css('display', 'none');
    };
   </script>
+  <script src="/js/app.js" charset="utf-8"></script>
 @endsection

@@ -3,18 +3,27 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\{Topic, Category, Reply};
+use App\{Topic, Category, Reply, Account};
 use Laratrust;
 
 class TopicsController extends Controller
 {
 
-    public function index()
+    public function index(Category $category)
     {
-        //
+        $topics = $category->topics()->with('account');
+
+        if (request()->keywords)
+            $topics->where('title', 'LIKE', '%'.request()->keywords.'%');
+
+        $topics = $topics->latest()->paginate(10);
+
+        request()->flashOnly(['keywords']);
+
+        return view('admin.topics.index', compact('topics', 'category'));
     }
 
-    public function store(Request $request, Category $category)
+    public function store(Category $category)
     {
         if (!Laratrust::can('create-forum-topic'))
             return abort(403);
@@ -31,7 +40,7 @@ class TopicsController extends Controller
           'account_id'  => \Auth::id()
         ]);
 
-        return redirect()->route('forum.topic', [$category->category_slug, $topic->topic_id]);
+        return redirect()->route('forum.topic', [$category->category_slug, $topic->id]);
     }
 
     public function store_reply($category, Topic $topic)
@@ -55,14 +64,32 @@ class TopicsController extends Controller
         return view('forum.categories.topic', compact('category', 'topic', 'replies'));
     }
 
-    public function edit($id)
+    public function edit($category, Topic $topic)
     {
-        //
+        return view('admin.topics.edit', compact('category', 'topic'));
     }
 
-    public function update(Request $request, $id)
+    public function create(Category $category)
     {
-        //
+        return view('admin.topics.create', compact('category'));
+    }
+
+    public function update($category, Topic $topic)
+    {
+        $this->validate(request(), [
+            'title'      => 'required|max:75',
+            'content'    => 'required|max:2000',
+            'account_id' => 'integer',
+        ]);
+
+        $topic->fill(request(['title', 'content']));
+
+        if (request('account_id'))
+            $topic->account()->associate(Account::findOrfail(request('account_id')));
+
+        $topic->save();
+
+        return redirect()->back();
     }
 
     public function update_reply($category, $topic)
@@ -86,8 +113,10 @@ class TopicsController extends Controller
         return redirect()->route('forum.topic', [$category, $topic]);
     }
 
-    public function destroy($id)
+    public function destroy($category, Topic $topic)
     {
-        //
+        $topic->delete();
+
+        return redirect()->route('admin.topic.index', $category);
     }
 }

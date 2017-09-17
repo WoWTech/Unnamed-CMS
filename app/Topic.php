@@ -3,9 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\StringManipulation;
 
 class Topic extends Model
 {
+    use StringManipulation;
+
     protected $connection = 'mysql';
 
     protected $fillable = ['title', 'content', 'account_id', 'category_id'];
