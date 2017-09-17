@@ -79,6 +79,13 @@ class TopicsController extends Controller
             return redirect()->route('forum.topic', [$category, $topic]);
     }
 
+    public function delete_reply($category, $topic, Reply $reply)
+    {
+        $reply->delete();
+
+        return redirect()->route('forum.topic', [$category, $topic]);
+    }
+
     public function destroy($id)
     {
         //

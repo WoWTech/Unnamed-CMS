@@ -13,17 +13,21 @@
 
 Auth::routes();
 
-Route::get('/', 'PostsController@index')->name('home');
-Route::get('/online', 'PagesController@online')->name('online');
-Route::get('forum', 'CategoryController@index')->name('forum');
-Route::get('forum/{slug}', 'CategoryController@show')->name('category');
-Route::get('forum/{category}/{topic}', 'TopicsController@show')->name('forum.topic');
-Route::post('forum/{category}/', 'TopicsController@store')->name('forum.topic.create');
-Route::post('forum/{category}/{topic}/create', 'TopicsController@store_reply')->name('forum.topic.reply.create');
-Route::patch('forum/{category}/{topic}', 'TopicsController@update_reply')->name('forum.topic.reply.update');
-Route::post('posts/{post}/comments', 'CommentsController@store');
-Route::resource('posts', 'PostsController');
-Route::resource('posts.comments', 'CommentsController');
+Route::get(     '/',                                   'PostsController@index')->name('home');
+Route::get(     '/online',                             'PagesController@online')->name('online');
+Route::get(     'forum',                               'CategoryController@index')->name('forum');
+Route::get(     'forum/{slug}',                        'CategoryController@show')->name('category');
+Route::get(     'forum/{category}/{topic}',            'TopicsController@show')->name('forum.topic');
+Route::patch(   'forum/{category}/{topic}',            'TopicsController@update')->name('forum.topic');
+Route::get(     'forum/{category}/{topic}/edit',       'TopicsController@edit')->name('forum.topic.edit');
+Route::delete(  'forum/{category}/{topic}',            'TopicsController@show')->name('forum.topic.delete');
+Route::post(    'forum/{category}/',                   'TopicsController@store')->name('forum.topic.create');
+Route::post(    'forum/{category}/{topic}/create',     'TopicsController@store_reply')->name('forum.topic.reply.create');
+Route::patch(   'forum/{category}/{topic}',            'TopicsController@update_reply')->name('forum.topic.reply.update');
+Route::delete(  'forum/{category}/{topic}/{reply}',    'TopicsController@delete_reply')->name('forum.topic.reply.delete');
+Route::post(    'posts/{post}/comments',               'CommentsController@store');
+Route::resource('posts',                               'PostsController');
+Route::resource('posts.comments',                      'CommentsController');
 
 Route::middleware('permission:view-dashboard')->prefix('admin')->group(function() {
     Route::get('/', 'Admin\DashboardController@index')->name('dashboard');

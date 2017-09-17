@@ -14,7 +14,12 @@
     <div class="content topic-replies">
       <div class="topic-reply">
         <div class="manage-reply"></div>
-
+        <div class="manage-topic-actions" onmouseleave="closeActionsMenu(this)" style="display: none;">
+          <ul>
+              <li><a href="{{ route('forum.topic.edit',   [$category, $topic]) }}" data-id="{{ $reply->id }}" class="method-link edit-link" data-method='PUT'>Edit</a></li>
+              <li><a href="{{ route('forum.topic.delete', [$category, $topic]) }}" class="method-link" data-method='DELETE'>Delete</a></li>
+          </ul>
+        </div>
         <div class="user-info">
           <span class="user-avatar" style="background-image:url('/images/user-avatar.png')"></span>
           <div class="account-details">
@@ -46,7 +51,7 @@
                   <li><a href="javascript:void(0)" data-id="{{ $reply->id }}" class="method-link edit-link" data-method='PUT'>Edit</a></li>
                 @endif
                 @if (Laratrust::canAndOwns('delete-own-reply', $reply) || Laratrust::can('delete-topic-reply'))
-                  <li><a href="/topic/{{ $topic->id }}/reply/{{ $reply->id }}" class="method-link" data-method='DELETE'>Delete</a></li>
+                  <li><a href="{{ route('forum.topic.reply.delete', [$category, $topic, $reply]) }}" class="method-link" data-method='DELETE'>Delete</a></li>
                 @endif
               </ul>
             </div>
