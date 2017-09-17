@@ -12,6 +12,7 @@ return [
             'comment' => 'v,u,d',
             'forum-topic' => 'u,d',
             'topic-reply' => 'u,d',
+            'forum-category' => 'c,u,d'
         ],
         'user' => [
             'post' => 'v',

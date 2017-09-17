@@ -44,12 +44,17 @@ class CategoryController extends Controller
 
     public function subcategoriesEdit(Category $category, Category $subcategory)
     {
+        if (!Laratrust::can('update-forum-category'))
+            return abort(403);
 
         return view('admin.subcategories.edit', compact('subcategory', 'category'));
     }
 
     public function subcategoriesUpdate(Category $category, Category $subcategory)
     {
+        if (!Laratrust::can('update-forum-category'))
+            return abort(403);
+
         $this->validateSubcategory();
 
         $subcategory->update(request(['name', 'category_description', 'category_slug']));
@@ -59,11 +64,17 @@ class CategoryController extends Controller
 
     public function subcategoriesCreate(Category $category)
     {
+        if (!Laratrust::can('create-forum-category'))
+            return abort(403);
+
         return view('admin.subcategories.create', compact('category'));
     }
 
     public function subcategoriesStore($category, Category $subcategory)
     {
+        if (!Laratrust::can('create-forum-category'))
+            return abort(403);
+
         $this->validateSubcategory();
 
         Category::create(request(['name', 'category_description', 'parent_id', 'category_slug']));
@@ -73,6 +84,9 @@ class CategoryController extends Controller
 
     public function subcategoriesDestroy($category, Category $subcategory)
     {
+        if (!Laratrust::can('delete-forum-category'))
+            return abort(403);
+
         $subcategory->delete();
 
         return redirect()->route('admin.subcategories.index', $category);
@@ -80,11 +94,17 @@ class CategoryController extends Controller
 
     public function create()
     {
+        if (!Laratrust::can('create-forum-category'))
+            return abort(403);
+
         return view('admin.categories.create');
     }
 
     public function store(Request $request)
     {
+        if (!Laratrust::can('create-forum-category'))
+            return abort(403);
+
         $this->validateSubcategory();
 
         Category::create(request(['name', 'category_description']));
@@ -104,11 +124,17 @@ class CategoryController extends Controller
 
     public function edit(Category $category)
     {
+        if (!Laratrust::can('update-forum-category'))
+            return abort(403);
+
         return view('admin.categories.edit', compact('category'));
     }
 
     public function update(Request $request, Category $category)
     {
+        if (!Laratrust::can('update-forum-category'))
+            return abort(403);
+
         $this->validateCategory();
 
         $category->update(request(['name', 'category_description']));
@@ -118,6 +144,9 @@ class CategoryController extends Controller
 
     public function destroy(Category $category)
     {
+        if (!Laratrust::can('delete-forum-category'))
+            return abort(403);
+
         $category->delete();
 
         return redirect()->route('admin.categories.index');

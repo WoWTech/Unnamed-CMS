@@ -45,6 +45,9 @@ class TopicsController extends Controller
 
     public function store_reply($category, Topic $topic)
     {
+        if (!Laratrust::can('create-topic-reply'))
+            return abort(403);
+
         $this->validate(request(), [
             'content' => 'required|max:2000'
         ]);
@@ -59,6 +62,9 @@ class TopicsController extends Controller
 
     public function show($category, Topic $topic)
     {
+        if (!Laratrust::can('view-forum-topic'))
+            return abort(403);
+
         $replies = $topic->replies()->simplePaginate(10);
 
         return view('forum.categories.topic', compact('category', 'topic', 'replies'));
@@ -66,16 +72,25 @@ class TopicsController extends Controller
 
     public function edit($category, Topic $topic)
     {
+        if (!Laratrust::can('update-forum-topic'))
+            return abort(403);
+
         return view('admin.topics.edit', compact('category', 'topic'));
     }
 
     public function create(Category $category)
     {
+        if (!Laratrust::can('create-forum-topic'))
+            return abort(403);
+
         return view('admin.topics.create', compact('category'));
     }
 
     public function update($category, Topic $topic)
     {
+        if (!Laratrust::can('update-forum-topic'))
+            return abort(403);
+
         $this->validate(request(), [
             'title'      => 'required|max:75',
             'content'    => 'required|max:2000',
@@ -94,6 +109,9 @@ class TopicsController extends Controller
 
     public function update_reply($category, $topic)
     {
+        if (!Laratrust::can('update-topic-reply'))
+            return abort(403);
+
         $this->validate(request(), [
             'content'  => 'required|max:2000',
             'reply_id' => 'required|integer',
@@ -108,6 +126,9 @@ class TopicsController extends Controller
 
     public function delete_reply($category, $topic, Reply $reply)
     {
+        if (!Laratrust::can('delete-topic-reply'))
+            return abort(403);
+
         $reply->delete();
 
         return redirect()->route('forum.topic', [$category, $topic]);
@@ -115,6 +136,9 @@ class TopicsController extends Controller
 
     public function destroy($category, Topic $topic)
     {
+        if (!Laratrust::can('delete-forum-topic'))
+            return abort(403);
+
         $topic->delete();
 
         return redirect()->route('admin.topic.index', $category);
