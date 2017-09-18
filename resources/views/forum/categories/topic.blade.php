@@ -16,8 +16,12 @@
         <div class="manage-reply"></div>
         <div class="manage-topic-actions" onmouseleave="closeActionsMenu(this)" style="display: none;">
           <ul>
+            @if (Laratrust::canAndOwns('update-own-topic', $topic) || Laratrust::can('update-forum-topic'))
               <li><a href="{{ route('admin.topic.edit',    [$category, $topic]) }}" class="method-link">Edit</a></li>
+            @endif
+            @if (Laratrust::canAndOwns('delete-own-topic', $topic) || Laratrust::can('delete-forum-topic'))
               <li><a href="{{ route('admin.topic.destroy', [$category, $topic]) }}" class="method-link" data-method='DELETE'>Delete</a></li>
+            @endif
           </ul>
         </div>
         <div class="user-info">

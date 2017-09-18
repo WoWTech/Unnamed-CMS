@@ -24,15 +24,19 @@
           @foreach ($topics as $topic)
             <tr class="topic" data-id="{{ $topic->id }}">
               <td class="topic-title">
-                @permission('update-forum-topic')
+                @if (Laratrust::canAndOwns(['update-own-topic', 'delete-own-topic'], $topic) || Laratrust::can(['update-forum-topic', 'delete-forum-topic']))
                   <div class="manage-topic"></div>
                   <div class="manage-topic-actions" onmouseleave="closeActionsMenu(this)" style="display: none;">
                     <ul>
+                      @if (Laratrust::canAndOwns('update-own-topic', $topic) || Laratrust::can('update-forum-topic'))
                         <li><a href="{{ route('admin.topic.edit',    [$category->category_slug, $topic]) }}" class="method-link">Edit</a></li>
+                      @endif
+                      @if (Laratrust::canAndOwns('delete-own-topic', $topic) || Laratrust::can('delete-forum-topic'))
                         <li><a href="{{ route('admin.topic.destroy', [$category, $topic]) }}" class="method-link" data-method='DELETE'>Delete</a></li>
+                      @endif
                     </ul>
                   </div>
-                @endpermission
+                @endif
                 <i class="topic-icon"></i>
                 <a href="{{ route('forum.topic', [$category->category_slug, $topic])}}">{{ $topic->title }}</a>
               </td>
