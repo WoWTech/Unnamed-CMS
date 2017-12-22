@@ -23,6 +23,8 @@ Route::post(    'forum/{category}/{topic}/create',     'TopicsController@store_r
 Route::patch(   'forum/{category}/{topic}',            'TopicsController@update_reply')->name('forum.topic.reply.update');
 Route::delete(  'forum/{category}/{topic}/{reply}',    'TopicsController@delete_reply')->name('forum.topic.reply.destroy');
 Route::post(    'posts/{post}/comments',               'CommentsController@store');
+Route::get(     'accounts/{account}/edit',             'AccountsController@edit')->name('account.edit');
+Route::patch(   'accounts/{account}',                  'AccountsController@update')->name('account.update');
 Route::resource('posts',                               'PostsController');
 Route::resource('posts.comments',                      'CommentsController');
 

@@ -22,6 +22,7 @@ return [
             'forum-topic' => 'c,v',
             'topic-reply' => 'c',
             'own-topic-reply' => 'u',
+            'own-account' => 'u'
         ],
     ],
     'permissions_map' => [

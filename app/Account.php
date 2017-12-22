@@ -40,6 +40,11 @@ class Account extends Authenticatable
         return $this->hasMany(Reply::class);
     }
 
+    public function avatar()
+    {
+        return $this->hasOne(Avatar::class);
+    }
+
     public static function boot()
     {
         parent::boot();
@@ -54,7 +59,12 @@ class Account extends Authenticatable
 
     public function getRememberTokenName()
     {
-      return null;
+        return null;
+    }
+
+    public function validatePassword($password)
+    {
+        return $this->sha_pass_hash == strtoupper(sha1(strtoupper($this->username).':'.strtoupper($password)));
     }
 
     protected function setPasswordAttribute($value)

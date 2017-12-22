@@ -3,16 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use App\{Account, Role};
 use Laratrust;
+use Image;
 
 class AccountsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
         $accounts = Account::query();
@@ -27,11 +25,6 @@ class AccountsController extends Controller
         return view('admin.accounts.index', compact('accounts'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create(Account $account)
     {
         if (!Laratrust::can('create-user'))
@@ -40,12 +33,6 @@ class AccountsController extends Controller
         return view('admin.accounts.create', compact($account));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store()
     {
         if (!Laratrust::can('create-user'))
@@ -64,13 +51,18 @@ class AccountsController extends Controller
         return redirect()->route('admin.accounts.index');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Account $account)
+    {
+        if ($this->isAdminRequest())
+            return $this->adminEdit($account);
+
+        if (!Laratrust::can('update-own-account') && $account->id != auth()->id())
+            return abort(403);
+
+        return view('accounts.edit', compact('account'));
+    }
+
+    public function adminEdit(Account $account)
     {
         if (!Laratrust::can('update-user'))
             return abort(403);
@@ -80,14 +72,36 @@ class AccountsController extends Controller
         return view('admin.accounts.edit', compact('account', 'roles'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Account $account)
+    {
+        if ($this->isAdminRequest())
+            return updateAdmin($account);
+
+        if (!Laratrust::can('update-own-account') && $account->id != auth()->id())
+            return abort(403);
+
+        $this->validate(request(), [
+              'email'         => 'sometimes|nullable|email',
+              'avatar'        => 'sometimes|nullable|image|max:2048|dimensions:ratio=1/1',
+              'password'      => 'sometimes|nullable|between:6,16',
+              'old_password'  => 'required|max:32',
+        ]);
+
+        if (!$account->validatePassword(request('old_password')))
+        {
+            request()->session()->flash('error', 'Old password is incorrect!');
+            return view('accounts.edit', compact('account'));
+        }
+
+        if (request('avatar'))
+            $this->saveAvatar(request('avatar'), $account);
+
+        $account->update(array_filter(request(['email', 'password'])));
+
+        return redirect()->route('account.edit', $account->id);
+    }
+
+    public function updateAdmin(Account $account)
     {
         if (!Laratrust::can('update-user'))
             return abort(403);
@@ -110,15 +124,8 @@ class AccountsController extends Controller
             $account->syncRoles(request()->roles);
 
         return redirect()->route('admin.accounts.index');
-
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Account $account)
     {
         if (!Laratrust::can('delete-user'))
@@ -128,4 +135,35 @@ class AccountsController extends Controller
 
         return redirect()->route('admin.accounts.index');
     }
+
+    public function saveAvatar($img, $account)
+    {
+        if (getimagesize($img)[0] > 75)
+        {
+            $filename = time() . '.' . $img->getClientOriginalExtension();
+            $folder = public_path("uploads\\user\\$account->id\\avatar\\");
+            $path = "user/$account->id/avatar/" . $filename;
+            $fullPath = $folder . $filename;
+
+            if (! \File::isDirectory($folder))
+            {
+                \File::makeDirectory($folder, 493, true);
+            }
+
+            Image::make($img->getRealPath())->resize(75,75)->save($fullPath);
+        }
+        else
+        {
+            $path = $img->store("user/$account->id/avatar", 'uploads');
+        }
+
+        if ($account->avatar)
+        {
+            Storage::disk('uploads')->delete($account->avatar->path);
+            $account->avatar->delete();
+        }
+
+        $account->avatar()->create(['path' => $path]);
+    }
+
 }

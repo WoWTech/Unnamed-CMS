@@ -16,7 +16,7 @@
 <body>
     @include('layouts.page-header')
 
-    <div class="main-section">
+    <div class="main-section" id='lol123'>
         <div class="main-section-content">
             @yield('content')
 
