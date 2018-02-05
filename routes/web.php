@@ -11,22 +11,31 @@
 |
 */
 
-Auth::routes();
+// All routes, except from 'api/...' will return view with ReactJS
 
-Route::get(     '/',                                   'PostsController@index')->name('home');
-Route::get(     '/online',                             'PagesController@online')->name('online');
-Route::get(     'forum',                               'CategoryController@index')->name('forum');
-Route::get(     'forum/{slug}',                        'CategoryController@show')->name('category');
-Route::post(    'forum/{category}/create',             'TopicsController@store')->name('forum.topic.store');
-Route::get(     'forum/{category}/{topic}',            'TopicsController@show')->name('forum.topic');
-Route::post(    'forum/{category}/{topic}/create',     'TopicsController@store_reply')->name('forum.topic.reply.create');
-Route::patch(   'forum/{category}/{topic}',            'TopicsController@update_reply')->name('forum.topic.reply.update');
-Route::delete(  'forum/{category}/{topic}/{reply}',    'TopicsController@delete_reply')->name('forum.topic.reply.destroy');
-Route::post(    'posts/{post}/comments',               'CommentsController@store');
-Route::get(     'accounts/{account}/edit',             'AccountsController@edit')->name('account.edit');
-Route::patch(   'accounts/{account}',                  'AccountsController@update')->name('account.update');
-Route::resource('posts',                               'PostsController');
-Route::resource('posts.comments',                      'CommentsController');
+Route::get('{reactRoutes}', function () {
+  return view('pages.index');
+})->where('reactRoutes', '^((?!api|admin).)*$'); // except 'api' word
+
+// API routes, that will provide data for react
+
+Route::prefix('api')->group(function() {
+  Auth::routes();
+
+  Route::get(     '/online',                             'PagesController@online')->name('online');
+  Route::get(     'forum',                               'CategoryController@index')->name('forum');
+  Route::get(     'forum/{slug}',                        'CategoryController@show')->name('category');
+  Route::post(    'forum/{category}/create',             'TopicsController@store')->name('forum.topic.store');
+  Route::get(     'forum/{category}/{topic}',            'TopicsController@show')->name('forum.topic');
+  Route::post(    'forum/{category}/{topic}/create',     'TopicsController@store_reply')->name('forum.topic.reply.create');
+  Route::patch(   'forum/{category}/{topic}',            'TopicsController@update_reply')->name('forum.topic.reply.update');
+  Route::delete(  'forum/{category}/{topic}/{reply}',    'TopicsController@delete_reply')->name('forum.topic.reply.destroy');
+  Route::post(    'posts/{post}/comments',               'CommentsController@store');
+  Route::get(     'accounts/{account}/edit',             'AccountsController@edit')->name('account.edit');
+  Route::patch(   'accounts/{account}',                  'AccountsController@update')->name('account.update');
+  Route::resource('posts',                               'PostsController');
+  Route::resource('posts.comments',                      'CommentsController');
+});
 
 Route::middleware('permission:view-dashboard')->prefix('admin')->group(function() {
     Route::get('/', 'Admin\DashboardController@index')->name('dashboard');
