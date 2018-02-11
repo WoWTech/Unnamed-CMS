@@ -24,7 +24,7 @@ class PostsController extends Controller
         {
             $posts = Post::latest()->simplePaginate(10);
 
-            return view('posts.index', compact('posts'));
+            return $posts;
         }
     }
 
@@ -35,15 +35,17 @@ class PostsController extends Controller
 
         $comments = Comment::with('account')->wherePostId($post->id)->simplePaginate(10);
 
-        return view('posts.show', compact('post', 'comments'));
+        return ['post'=> $post, 'comments' => $comments];
     }
 
     public function edit(Post $post)
     {
-        if (!Laratrust::can('edit-post') && !Laratrust::canAndOwns('update-own-post', $post))
+        if (!Laratrust::can('edit-post') && 
+            !Laratrust::canAndOwns('update-own-post', $post) &&
+            !$this->isAdminRequest())
             return abort(403);
 
-        return $this->isAdminRequest() ? view('admin.posts.edit', compact('post')) : view('posts.edit', compact('post'));
+        return view('admin.posts.edit', compact('post'));
     }
 
     public function update(Post $post)
@@ -59,7 +61,7 @@ class PostsController extends Controller
         $post->title = request()->title;
         $post->content = request()->content;
 
-        if ( isset(request()->account_id) )
+        if (isset(request()->account_id))
             $post->account()->associate(Account::findOrFail(request()->account_id));
 
         $post->save();
@@ -69,10 +71,10 @@ class PostsController extends Controller
 
     public function create()
     {
-        if (!Laratrust::can('create-post'))
+        if (!Laratrust::can('create-post') || $this->isAdminRequest())
             return abort(403);
 
-        return $this->isAdminRequest() ? view('admin.posts.create') : view('posts.create');
+        return view('admin.posts.create');
     }
 
     public function store()
@@ -82,11 +84,14 @@ class PostsController extends Controller
 
         $this->postValidation();
 
-        Post::create([
+        $post = Post::create([
             'title'      => request('title'),
             'content'    => request('content'),
             'account_id' => \Auth::id(),
         ]);
+
+        if(request()->ajax())
+            return $post;
 
         return redirect('/');
     }
