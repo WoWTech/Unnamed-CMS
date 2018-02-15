@@ -14,7 +14,7 @@
 // All routes, except from 'api/...' will return view with ReactJS
 
 Route::get('{reactRoutes}', function () {
-  return view('pages.index');
+  return view('index');
 })->where('reactRoutes', '^((?!api|admin).)*$'); // except 'api' word
 
 // API routes, that will provide data for react
