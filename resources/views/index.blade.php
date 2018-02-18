@@ -13,7 +13,8 @@
     <link rel="stylesheet" href="{{ asset('css/fonts/index.css') }}">
 </head>
 
-<body id='root'>
+<body>
+    <div id='root'></div>
     <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
 </body>
 
