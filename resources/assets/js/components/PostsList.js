@@ -5,6 +5,7 @@ class PostsList extends Component {
 
   samplePost() {
     return {
+      id: 1,
       title: 'Title placeholder',
       content: 'Content placeholder',
       created_at: '1970-00-00'

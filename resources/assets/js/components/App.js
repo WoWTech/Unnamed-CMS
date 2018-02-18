@@ -3,6 +3,7 @@ import { Route } from 'react-router-dom';
 import Sidebar from './Sidebar';
 import Header from './Header';
 import PostsList from './PostsList';
+import PostPage from './PostPage';
 
 class App extends Component {
   render() {
@@ -11,8 +12,8 @@ class App extends Component {
         <Header />
         <div className="main-section">
           <div className="main-section-content">
-            <Route exact path='/posts/' component={PostsList} />
-            <Route path='/posts/:post' render={() => 'ok2'} />
+            <Route exact path='/' component={PostsList} />
+            <Route path='/posts/:post' component={PostPage} />
             <Sidebar />
           </div>
         </div>
