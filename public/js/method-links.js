@@ -4,7 +4,8 @@ const method_link = event => {
   const element = event.target;
   const { method } = element.dataset;
   const href = element.getAttribute('href');
-  const token = element.getAttribute('content');
+  const token = document.querySelector('meta[name="csrf-token"]')
+                        .getAttribute('content');
   const form = document.createElement('form');
 
   form.setAttribute('action', href);
