@@ -4,6 +4,7 @@ import Sidebar from './Sidebar';
 import Header from './Header';
 import PostsList from './PostsList';
 import PostPage from './PostPage';
+import OnlineList from './OnlineList';
 
 class App extends Component {
   render() {
@@ -13,6 +14,7 @@ class App extends Component {
         <div className="main-section">
           <div className="main-section-content">
             <Route exact path='/' component={PostsList} />
+            <Route exact path='/online' component={OnlineList} />
             <Route path='/posts/:post' component={PostPage} />
             <Sidebar />
           </div>

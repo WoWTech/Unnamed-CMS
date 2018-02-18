@@ -32,7 +32,7 @@ class ServerInfo extends Component {
         <div className="server-buttons">
             <a href="#">Registration</a>
             <a href="#">Forum</a>
-            <a href="#">Statistic</a>
+            <a href="/online">Statistic</a>
         </div>
       </div>
     );
