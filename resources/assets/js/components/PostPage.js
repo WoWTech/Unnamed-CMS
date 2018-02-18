@@ -30,7 +30,7 @@ class PostPage extends Component {
     const comments =  this.sampleComments(5);
 
     return (
-      <section class="view-post">
+      <section className="view-post">
         <Post post={ this.samplePost() }>
           { comments && <CommentsSection comments={ comments } /> }
         </Post>

@@ -9,14 +9,14 @@ const Post = ({ post, children }) => {
           { children ? post.title 
                      : <Link to={`/posts/${post.id}`}>{post.title}</Link> }
           </h2>
-        <time datetime={ post.created_at }>{ post.created_at }</time>
-          <div class='action-buttons'>
-              <a href="#" class="edit"></a>
-              <a href="#" class="delete method-link" data-method="DELETE"></a>
+        <time dateTime={ post.created_at }>{ post.created_at }</time>
+          <div className='action-buttons'>
+              <a href="#" className="edit"></a>
+              <a href="#" className="delete method-link" data-method="DELETE"></a>
           </div>
       </header>
 
-      <p class="article-content">{ post.content }</p>
+      <p className="article-content">{ post.content }</p>
 
       { children }
     </article>

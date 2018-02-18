@@ -14,7 +14,7 @@ class PostsList extends Component {
 
   render() {
     return (
-      <section class="page-content">
+      <section className="page-content">
 
         <Post post={this.samplePost()} />
         {/* {{ $posts->links() }} */}

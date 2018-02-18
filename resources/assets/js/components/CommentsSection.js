@@ -8,7 +8,7 @@ const CommentsSection = ({ comments }) => {
   });
 
   return (
-    <section class="page-content">
+    <section className="page-content">
       <header>
         <h2>Comments</h2>
       </header>
