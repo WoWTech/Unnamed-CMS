@@ -9,7 +9,7 @@
 
     <title>{{ config('app.name', 'Mystic-WoW') }}</title>
 
-    <link rel="stylesheet" href="{{ asset('css/main.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <link rel="stylesheet" href="{{ asset('css/fonts/index.css') }}">
 </head>
 
