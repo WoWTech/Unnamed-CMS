@@ -5,7 +5,7 @@ import ServerInfo from './ServerInfo';
 const Header = () => {
   return (
     <div className="upper-body">
-      <div className="logo"></div>
+      <div className="page-logo"></div>
       <div className="header">
         <Slider />
         <ServerInfo />
