@@ -6,6 +6,7 @@ import PostsList from './PostsList';
 import PostPage from './PostPage';
 import OnlineList from './OnlineList';
 import PostForm from './PostForm';
+import EditAccount from './EditAccount';
 
 class App extends Component {
   render() {
@@ -15,6 +16,7 @@ class App extends Component {
         <div className="main-section">
           <div className="main-section-content">
             <Switch>
+              <Route exact path='/accounts/:account/edit' component={EditAccount} />
               <Route exact path='/online' component={OnlineList} />
               <Route path='/posts/create' render={() => <PostForm action='Add' />} />
               <Route path='/posts/:post/edit' render={() => <PostForm action='Edit' />} />
