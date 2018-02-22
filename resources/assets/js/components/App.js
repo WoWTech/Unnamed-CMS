@@ -7,6 +7,7 @@ import PostPage from './PostPage';
 import OnlineList from './OnlineList';
 import PostForm from './PostForm';
 import EditAccount from './EditAccount';
+import EditComment from './EditComment';
 
 class App extends Component {
   render() {
@@ -18,9 +19,10 @@ class App extends Component {
             <Switch>
               <Route exact path='/accounts/:account/edit' component={EditAccount} />
               <Route exact path='/online' component={OnlineList} />
-              <Route path='/posts/create' render={() => <PostForm action='Add' />} />
-              <Route path='/posts/:post/edit' render={() => <PostForm action='Edit' />} />
-              <Route path='/posts/:post' component={PostPage} />
+              <Route exact path='/posts/:post/comments/:comment/edit' component={EditComment} />
+              <Route exact path='/posts/create' render={() => <PostForm action='Add' />} />
+              <Route exact path='/posts/:post/edit' render={() => <PostForm action='Edit' />} />
+              <Route exact path='/posts/:post' component={PostPage} />
               <Route component={PostsList} />
             </Switch>
             <Sidebar />
