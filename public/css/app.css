@@ -727,6 +727,9 @@ nav > div.user-bar {
   display: flex;
   margin-left: auto;
   align-items: center;
+  justify-content: flex-end;
+  margin-right: 0;
+  padding-right: 0;
 }
 .forum-category > header > aside > input {
   width: 175px;

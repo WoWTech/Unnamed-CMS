@@ -3,6 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 import CategoriesList from './CategoriesList';
 import Navigation from './Navigation';
 import Subcategory from './Subcategory';
+import Topic from './Topic';
 
 class Forum extends Component {
   render() {
@@ -14,6 +15,7 @@ class Forum extends Component {
         <Navigation />
         <div className="forum">
           <Switch>
+            <Route path={`${path}/:category/:topic`} component={Topic} />
             <Route path={`${path}/:category`} component={Subcategory} />
             <Route component={CategoriesList} />
           </Switch>
