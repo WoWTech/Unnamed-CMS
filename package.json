@@ -21,6 +21,8 @@
         "react-dom": "^16.2.0"
     },
     "dependencies": {
-        "react-router-dom": "^4.2.2"
+        "react-redux": "^5.0.7",
+        "react-router-dom": "^4.2.2",
+        "redux": "^3.7.2"
     }
 }
