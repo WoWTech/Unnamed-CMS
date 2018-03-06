@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import Post from './Post';
+import { connect } from 'react-redux';
+import { fetchPosts } from '../actions/index';
 
 class PostsList extends Component {
-
   samplePost() {
     return {
       id: 1,
@@ -10,6 +11,10 @@ class PostsList extends Component {
       content: 'Content placeholder',
       created_at: '1970-00-00'
     }
+  }
+
+  componentDidMount() {
+    this.props.fetchPosts();
   }
 
   render() {
@@ -23,4 +28,4 @@ class PostsList extends Component {
     );
   }
 }
-export default PostsList;
+export default connect(null, { fetchPosts })(PostsList);
