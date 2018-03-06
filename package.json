@@ -16,15 +16,18 @@
         "cross-env": "^3.2.3",
         "jquery": "^3.1.1",
         "laravel-mix": "^1.0",
-        "lodash": "^4.17.4",
+        "lodash": "^4.17.5",
         "react": "^16.2.0",
         "react-dom": "^16.2.0"
     },
     "dependencies": {
+        "css-loader": "^0.28.10",
         "normalizr": "^3.2.4",
         "react-redux": "^5.0.7",
         "react-router-dom": "^4.2.2",
         "redux": "^3.7.2",
-        "redux-thunk": "^2.2.0"
+        "redux-thunk": "^2.2.0",
+        "reselect": "^3.0.1",
+        "style-loader": "^0.20.2"
     }
 }
