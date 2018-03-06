@@ -2,30 +2,33 @@ import React, { Component } from 'react';
 import Post from './Post';
 import { connect } from 'react-redux';
 import { fetchPosts } from '../actions/index';
+import { getAllPosts } from '../selectors';
 
 class PostsList extends Component {
-  samplePost() {
-    return {
-      id: 1,
-      title: 'Title placeholder',
-      content: 'Content placeholder',
-      created_at: '1970-00-00'
-    }
-  }
-
   componentDidMount() {
     this.props.fetchPosts();
   }
 
+  generate_posts() {
+    return this.props.posts.map(post =>
+      <Post key={post.id} post={post} />
+    );
+  }
+
   render() {
+    const isEmpty = this.props.posts.length === 0;
     return (
       <section className="page-content">
-
-        <Post post={this.samplePost()} />
-        {/* {{ $posts->links() }} */}
-
+        {!isEmpty && this.generate_posts()}
+        {this.props.isFetching && 'Loading..'}
       </section>
     );
   }
 }
-export default connect(null, { fetchPosts })(PostsList);
+
+const mapStateToProps = state => ({
+  posts: getAllPosts(state),
+  isFetching: state.pagination.isFetching
+});
+
+export default connect(mapStateToProps, { fetchPosts })(PostsList);
