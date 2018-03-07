@@ -615,6 +615,10 @@ span.error-message {
   margin: 5px 0px;
   border: 1px solid rgb(239, 34, 34);
 }
+.center {
+  display: flex;
+  margin: 0 auto;
+}
 
 .forum-body {
   font-family: "SL";

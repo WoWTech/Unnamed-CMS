@@ -3,6 +3,7 @@ import Post from './Post';
 import { connect } from 'react-redux';
 import { fetchPosts } from '../actions/index';
 import { getAllPosts } from '../selectors';
+import Loader from './Loader'
 
 class PostsList extends Component {
   componentDidMount() {
@@ -20,7 +21,7 @@ class PostsList extends Component {
     return (
       <section className="page-content">
         {!isEmpty && this.generate_posts()}
-        {this.props.isFetching && 'Loading..'}
+        {this.props.isFetching && <Loader />}
       </section>
     );
   }
