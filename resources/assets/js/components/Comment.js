@@ -6,7 +6,7 @@ const Comment = ({ comment }) => {
       <img src="../images/user_avatar.png" alt="" className="avatar" />
       <div className="comment-content">
         <div className="comment-header">
-          { comment.account }
+          { comment.username }
           <time dateTime={ comment.created_at }>{ comment.created_at }</time>
 
             <div className='action-buttons'>

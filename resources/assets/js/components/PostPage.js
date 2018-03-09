@@ -1,42 +1,41 @@
 import React, { Component } from 'react';
 import CommentsSection from './CommentsSection';
+import { fetchPost } from '../actions';
+import { getCommentsWithAuthors } from '../selectors';
+import { connect } from 'react-redux';
+import Loader from './Loader';
 import Post from './Post';
 
 class PostPage extends Component {
-  samplePost() {
-    return {
-      title: 'Title placeholder',
-      content: 'Content placeholder',
-      created_at: '1970-00-00'
-    }
-  }
+  componentDidMount() {
+    const { fetchPost, match } = this.props;
 
-  sampleComments(count) {
-    let comments = new Array(count);
-
-    for (let index = 0; index < count; index++) {
-      comments[index] = {
-        id: index,
-        account: 'Username',
-        content: 'Sample comment content',
-        created_at: '18.02.2018 18:25'
-      }
-    }
-
-    return comments;  
+    fetchPost(match.params.post);
   }
 
   render() {
-    const comments =  this.sampleComments(5);
-
+    const { post, comments } = this.props;
     return (
       <section className="view-post">
-        <Post post={ this.samplePost() }>
-          { comments && <CommentsSection comments={ comments } /> }
-        </Post>
+        { post 
+            ? <Post post={ post }>
+                { comments && <CommentsSection comments={ comments } /> }
+              </Post>
+            : <Loader />
+        }
       </section>
     );
   }
 }
 
-export default PostPage;
+const mapStateToProps = (state, props) => {
+  const id = props.match.params.post;
+  const { posts } = state.entities;
+
+  return {
+    post: state.entities.posts[id],
+    comments: getCommentsWithAuthors(state, props)
+  }
+}
+
+export default connect(mapStateToProps, { fetchPost })(PostPage);
