@@ -2,7 +2,7 @@ import React from 'react';
 
 export default ({width = 75, height = 75, color = 'rgba(28, 58, 87, 0.77)'}) => {
   return (
-    <svg class="center" width={height} height={width} fill={color} viewBox="0 0 135 140" xmlns="http://www.w3.org/2000/svg" >
+    <svg className="center" width={height} height={width} fill={color} viewBox="0 0 135 140" xmlns="http://www.w3.org/2000/svg" >
       <rect y="10" width="15" height="120" rx="6">
         <animate attributeName="height"
             begin="0.5s" dur="1s"
