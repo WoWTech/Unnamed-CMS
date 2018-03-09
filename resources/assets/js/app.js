@@ -7,7 +7,7 @@ import { createStore, applyMiddleware, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
 
 import entities from './reducers/entities.js';
-import pagination from './reducers/posts_pagination.js';
+import pagination from './reducers/pagination.js';
 
 import App from './components/App.js';
 import Forum from './components/forum/Forum.js';
