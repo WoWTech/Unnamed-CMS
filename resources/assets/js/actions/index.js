@@ -52,12 +52,13 @@ const receive_post = response => ({
   response
 })
 
-export const fetchPosts = () => dispatch => {
+export const fetchPosts = () => (dispatch, getState) => {
   const { axios } = window;
+  const { next_page_url } = getState().pagination.posts;
 
   dispatch(requets_posts());
 
-  axios.get(`${API}/posts`)
+  axios.get(next_page_url ? next_page_url : `${API}/posts` )
     .then(({ request: { response } }) => JSON.parse(response))
     .then(json => formatPostsResponse(json))
     .then(formatted => dispatch(receive_posts(formatted)));

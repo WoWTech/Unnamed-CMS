@@ -3,7 +3,7 @@ import union from 'lodash/union';
 
 const default_state = {
   isFetching: false,
-  next_page_url: null,
+  next_page_url: undefined,
   ids: []
 };
 
