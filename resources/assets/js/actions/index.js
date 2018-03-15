@@ -7,7 +7,7 @@ export const RECEIVE_POSTS = 'RECIEVE_POSTS';
 export const RECEIVE_POST = 'RECIEVE_POST';
 
 const post = new schema.Entity('posts');
-const user = new schema.Entity('accounts');
+const user = new schema.Entity('accounts', {}, { idAttribute: 'username' });
 const comment = new schema.Entity('comments', {
   account: user
 });

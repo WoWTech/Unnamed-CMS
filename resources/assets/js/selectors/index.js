@@ -26,7 +26,7 @@ export const getPostComments = createSelector(
 export const getCommentsWithAuthors = createSelector(
   [ getPostComments, getUsers ], (comments, users) => {
     return comments.map(comment => {
-      const { username } = users[comment.account_id];
+      const { username } = users[comment.account];
 
       return Object.assign({}, comment, { username });
     });

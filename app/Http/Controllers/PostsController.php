@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\{Post, Comment, Account};
+use App\Http\Resources\CommentResource;
 use Laratrust;
 
 class PostsController extends Controller
@@ -33,9 +34,13 @@ class PostsController extends Controller
         if (auth()->check() && !Laratrust::can('view-post'))
             return abort(403);
 
-        $comments = Comment::with('account')->wherePostId($post->id)->simplePaginate(10);
+        $comments = Comment::with('account')->wherePostId($post->id)->paginate(10);
 
-        return ['post'=> $post, 'comments' => $comments];
+        return ['post'=> $post, 'comments' => [
+                                    'data' => CommentResource::collection($comments), 
+                                    'next_page_url' => $comments->nextPageUrl()
+                                    ]
+        ];
     }
 
     public function edit(Post $post)

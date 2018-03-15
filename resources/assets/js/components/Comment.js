@@ -7,7 +7,7 @@ const Comment = ({ comment }) => {
       <div className="comment-content">
         <div className="comment-header">
           { comment.username }
-          <time dateTime={ comment.created_at }>{ comment.created_at }</time>
+          <time dateTime={ comment.created_at.date }>{ comment.created_at.date }</time>
 
             <div className='action-buttons'>
                 <a href="#" className="edit"></a>
