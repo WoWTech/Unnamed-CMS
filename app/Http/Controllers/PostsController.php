@@ -38,7 +38,8 @@ class PostsController extends Controller
 
         return ['post'=> $post, 'comments' => [
                                     'data' => CommentResource::collection($comments), 
-                                    'next_page_url' => $comments->nextPageUrl()
+                                    'next_page_url' => $comments->nextPageUrl(),
+                                    'current_page' => $comments->currentPage()
                                     ]
         ];
     }

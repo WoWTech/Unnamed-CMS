@@ -15,7 +15,6 @@ const CommentsSection = ({
     return <Comment key={comment.id} comment={comment} />;
   });
     
-  console.log(next_page_url);
   return (
     <section className="page-content">
       <header>

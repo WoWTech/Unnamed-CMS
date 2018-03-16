@@ -20,16 +20,22 @@ const formatPostsResponse = ({ data, next_page_url }) => ({
   next_page_url
 })
 
-const formatPostResponse = (response, id) => {
+const formatPostResponse = (response, id, store_comments) => {
   const posts = normalize(response.post, post)
-  const { data, next_page_url } = response.comments;
+  const { data } = response.comments;
   const comments = normalize(data, [comment]);
-  
+
+  const {
+    current_page,
+    next_page_url
+  } = getUpToDateResource(store_comments, response.comments);
+
   delete posts['result'];
-  
+
   return {
     ...merge(posts, comments),
     next_page_url,
+    current_page,
     postId: id
   }
 }
@@ -70,8 +76,9 @@ export const fetchPosts = () => (dispatch, getState) => {
     .then(formatted => dispatch(receive_posts(formatted)));
 }
 
-export const fetchPost = (id, next_page_url = null) => dispatch => {
+export const fetchPost = (id, next_page_url = null) => (dispatch, getState) => {
   const { axios } = window;
+  const comments = getState().pagination.comments[id];
 
   next_page_url 
     ? dispatch(request_comments(id)) 
@@ -79,8 +86,28 @@ export const fetchPost = (id, next_page_url = null) => dispatch => {
   
   axios.get(next_page_url ? next_page_url : `${API}/posts/${id}`)
     .then(data => getJSON(data))
-    .then(json => formatPostResponse(json, id))
+    .then(json => formatPostResponse(json, id, comments))
     .then(formatted => dispatch(receive_post(formatted)));
+}
+
+/* 
+  When user loaded comments (2+ pages) on the post page,
+  moves to the previous page and than again clicks on
+  the post, it can cause refetching of already fetched
+  comments, because refetched post reset comments next_page.
+  That is why, it's important to use already stored link
+  in the pagination.comments[post_id] piece of store if it's
+  defined (even if the link is null, which indicates the end
+  of the comments list).
+*/
+
+const getUpToDateResource = (resource, fetched_resource) => {
+  const page_defined = resource && typeof resource.current_page !== undefined;
+
+  if (page_defined && resource.current_page >= fetched_resource.current_page)
+    return resource;
+
+  return fetched_resource;
 }
 
 const getJSON = data => JSON.parse(data.request.response);

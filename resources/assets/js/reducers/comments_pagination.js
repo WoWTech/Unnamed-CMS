@@ -18,7 +18,8 @@ export default (state = {}, action) => {
         [action.response.postId]: {
           isFetching: false,
           ids: union(state[action.response.postId].ids, action.response.result),
-          next_page_url: action.response.next_page_url
+          next_page_url: action.response.next_page_url,
+          current_page: action.response.current_page
         }
       }
     default:
