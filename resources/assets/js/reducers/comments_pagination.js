@@ -1,9 +1,10 @@
-import { REQUEST_POST, RECEIVE_POST } from '../actions';
+import { REQUEST_POST, RECEIVE_POST, REQUEST_COMMENTS } from '../actions';
 import union from 'lodash/union';
 
 export default (state = {}, action) => {
   switch(action.type) {
     case REQUEST_POST:
+    case REQUEST_COMMENTS:
       return {
         ...state,
         [action.postId]: {
@@ -17,7 +18,7 @@ export default (state = {}, action) => {
         [action.response.postId]: {
           isFetching: false,
           ids: union(state[action.response.postId].ids, action.response.result),
-          next_page_url: action.next_page_url
+          next_page_url: action.response.next_page_url
         }
       }
     default:

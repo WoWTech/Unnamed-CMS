@@ -3,6 +3,7 @@ import merge from 'lodash/merge';
 
 export const REQUEST_POSTS = 'REQUETS_POSTS';
 export const REQUEST_POST = 'REQUETS_POST';
+export const REQUEST_COMMENTS = 'REQUEST_COMMENTS';
 export const RECEIVE_POSTS = 'RECIEVE_POSTS';
 export const RECEIVE_POST = 'RECIEVE_POST';
 
@@ -52,6 +53,11 @@ const receive_post = response => ({
   response
 })
 
+const request_comments = postId => ({
+  type: REQUEST_COMMENTS,
+  postId
+})
+
 export const fetchPosts = () => (dispatch, getState) => {
   const { axios } = window;
   const { next_page_url } = getState().pagination.posts;
@@ -59,18 +65,22 @@ export const fetchPosts = () => (dispatch, getState) => {
   dispatch(requets_posts());
 
   axios.get(next_page_url ? next_page_url : `${API}/posts` )
-    .then(({ request: { response } }) => JSON.parse(response))
+    .then(data => getJSON(data))
     .then(json => formatPostsResponse(json))
     .then(formatted => dispatch(receive_posts(formatted)));
 }
 
-export const fetchPost = id => dispatch => {
+export const fetchPost = (id, next_page_url = null) => dispatch => {
   const { axios } = window;
 
-  dispatch(requets_post(id));
-
-  axios.get(`${API}/posts/${id}`)
-    .then(({ request: { response } }) => JSON.parse(response))
+  next_page_url 
+    ? dispatch(request_comments(id)) 
+    : dispatch(requets_post(id));
+  
+  axios.get(next_page_url ? next_page_url : `${API}/posts/${id}`)
+    .then(data => getJSON(data))
     .then(json => formatPostResponse(json, id))
     .then(formatted => dispatch(receive_post(formatted)));
 }
+
+const getJSON = data => JSON.parse(data.request.response);

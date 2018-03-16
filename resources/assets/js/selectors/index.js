@@ -8,7 +8,7 @@ const getCommentIds = (state, props) => {
   const id = props.match.params.post;
   const comments = state.pagination.comments[id];
 
-  return (comments && !comments.isFetching) ? comments.ids : [];
+  return comments && comments.ids || [];
 }
 const getUsers = state => state.entities.accounts;
 

@@ -14,12 +14,20 @@ class PostPage extends Component {
   }
 
   render() {
-    const { post, comments } = this.props;
+    const { post, comments, next_page_url, fetchPost, isFetching } = this.props;
+    const postId = this.props.match.params.post;
     return (
       <section className="view-post">
         { post 
             ? <Post post={ post }>
-                { comments && <CommentsSection comments={ comments } /> }
+                { comments && <CommentsSection 
+                                fetchPost={ fetchPost } 
+                                comments={ comments } 
+                                next_page_url={ next_page_url }
+                                postId={postId}
+                                isFetching={isFetching}
+                                /> 
+                }
               </Post>
             : <Loader />
         }
@@ -31,10 +39,15 @@ class PostPage extends Component {
 const mapStateToProps = (state, props) => {
   const id = props.match.params.post;
   const { posts } = state.entities;
+  const comments = state.pagination.comments[id]
+  const template = { next_page_url: null, isFetching: null };
+  const { next_page_url, isFetching } = comments || template;
 
   return {
     post: state.entities.posts[id],
-    comments: getCommentsWithAuthors(state, props)
+    comments: getCommentsWithAuthors(state, props),
+    next_page_url,
+    isFetching
   }
 }
 
